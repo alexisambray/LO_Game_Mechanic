@@ -1,0 +1,18 @@
+# Unity specific
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Vv]s/
+.vs/
+.userprefs
+.sln
+*.csproj
+*.unityproj
+*.pidb
+*.suo
+*.user
+*.booproj
+*.pidb.meta
