@@ -1,18 +1,30 @@
 using System.Collections;
 using UnityEngine;
 using TMPro; // For TextMeshPro text
+using UnityEngine.UI; // For buttons
 
 public class GlassTankInteraction : MonoBehaviour
 {
-    public TMP_Text resultText; // Reference to the text that will display results
-    private bool isProcessing = false; // Prevent clicking while processing
-    private int daysToWait = 2; // Placeholder for in-game days waiting for results
+    // Reference to the result text
+    public TMP_Text resultText;
+
+    // References to the buttons
+    public Button foodButton;
+    public Button medicineButton;
+    public Button healthCleaningButton;
+    public Button cosmeticsButton;
+    public Button personalHygieneButton;
+    public Button agricultureButton;
+
+    // Prevent clicking while processing
+    private bool isProcessing = false;
 
     // On object click
     private void OnMouseDown()
     {
         if (!isProcessing)
         {
+            // Start the analysis coroutine
             StartCoroutine(CentrifugeProcess());
         }
     }
@@ -22,61 +34,29 @@ public class GlassTankInteraction : MonoBehaviour
     {
         isProcessing = true;
 
-        // Show that the centrifuge is processing the mixture
-        resultText.text = "Centrifuge: Analyzing mixture...";
-        yield return new WaitForSeconds(3f); // Simulate processing time (3 seconds)
+        // Display "Mixing..." during the centrifuge process
+        resultText.text = "Mixing...";
 
-        // Allow player to guess appearance after centrifuge analysis
-        resultText.text = "Centrifuge Complete: Guess the mixture's appearance.";
-        isProcessing = false;
+        // Simulate analysis process (wait 3 seconds)
+        yield return new WaitForSeconds(3f);
 
-        // Now let the player guess the appearance (homogeneous/heterogeneous)
-        // You could implement buttons for guessing or handle user input in another way
-        // For simplicity, we can assume a guess function:
-        GuessAppearance();
-    }
+        // After processing, display the result
+        resultText.text = "Analysis Complete: The mixture is homogeneous.";
 
-    // Placeholder function to simulate the guessing system
-    void GuessAppearance()
-    {
-        // Let’s assume the player guesses "homogeneous" for now (this would normally be user input)
-        string playerGuess = "homogeneous";
-        CheckAppearanceGuess(playerGuess);
-    }
+        // Show the buttons for the player to guess the use
+        ShowUseButtons();
 
-    // Function to check if the player's guess was correct
-    void CheckAppearanceGuess(string guess)
-    {
-        string correctAnswer = "homogeneous"; // In reality, this would vary per mixture
-        if (guess == correctAnswer)
-        {
-            resultText.text = "Correct! Now send the mixture to DFA for further analysis.";
-            // Now the player must guess the use (Food/Beverage, etc.)
-            StartCoroutine(SendToDFA());
-        }
-        else
-        {
-            resultText.text = "Incorrect guess. Try again.";
-        }
-    }
-
-    // Simulate sending the mixture to DFA for checking the use
-    IEnumerator SendToDFA()
-    {
-        isProcessing = true;
-        resultText.text = "Sending to DFA for analysis...";
-        yield return new WaitForSeconds(daysToWait); // Simulate waiting for DFA results (2 days)
-
-        resultText.text = "DFA Results: The mixture is used for Food/Beverage.";
-        // Unlock the object in the shelf, for example
-        UnlockShelfObject();
         isProcessing = false;
     }
 
-    // Function to unlock the object on the shelf after correct appearance and use guesses
-    void UnlockShelfObject()
+    // Function to activate the buttons
+    void ShowUseButtons()
     {
-        resultText.text = "Object unlocked on the shelf!";
-        // Here you would handle the logic to display the unlocked item in the shelf
+        foodButton.gameObject.SetActive(true);
+        medicineButton.gameObject.SetActive(true);
+        healthCleaningButton.gameObject.SetActive(true);
+        cosmeticsButton.gameObject.SetActive(true);
+        personalHygieneButton.gameObject.SetActive(true);
+        agricultureButton.gameObject.SetActive(true);
     }
 }
