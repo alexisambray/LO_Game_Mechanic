@@ -19,6 +19,13 @@ public class GlassTankInteraction : MonoBehaviour
     // Prevent clicking while processing
     private bool isProcessing = false;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Initially hide the buttons
+        HideUseButtons();
+    }
+
     // On object click
     private void OnMouseDown()
     {
@@ -58,5 +65,16 @@ public class GlassTankInteraction : MonoBehaviour
         cosmeticsButton.gameObject.SetActive(true);
         personalHygieneButton.gameObject.SetActive(true);
         agricultureButton.gameObject.SetActive(true);
+    }
+
+    // Function to hide the buttons at the start
+    void HideUseButtons()
+    {
+        foodButton.gameObject.SetActive(false);
+        medicineButton.gameObject.SetActive(false);
+        healthCleaningButton.gameObject.SetActive(false);
+        cosmeticsButton.gameObject.SetActive(false);
+        personalHygieneButton.gameObject.SetActive(false);
+        agricultureButton.gameObject.SetActive(false);
     }
 }
