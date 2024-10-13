@@ -1,7 +1,6 @@
-using TMPro;
-using UnityEngine;
-
 using System.Collections;
+using UnityEngine;
+using TMPro; // For TextMeshPro text
 using UnityEngine.UI; // For buttons
 
 public class GlassTankInteraction : MonoBehaviour
@@ -20,8 +19,11 @@ public class GlassTankInteraction : MonoBehaviour
     // Prevent clicking while processing
     private bool isProcessing = false;
 
-    // Example: Correct use for the mixture (can be dynamic or come from an external source)
+    // Example: Correct use for the mixture (can be dynamic)
     private string correctUse = "Food/Beverage"; // Set this dynamically based on the mixture
+
+    // Time delay for verifying the mixture (in in-game days)
+    private int verificationDays = 0;
 
     void Start()
     {
@@ -73,17 +75,55 @@ public class GlassTankInteraction : MonoBehaviour
         // Hide buttons after selection
         HideUseButtons();
 
-        // Check if the guessed use is correct
+        // Set the verification time based on the selected use category
+        switch (selectedUse)
+        {
+            case "Food/Beverage":
+                verificationDays = 3;
+                break;
+            case "Medicine":
+                verificationDays = 4;
+                break;
+            case "Health Cleaning":
+                verificationDays = 2;
+                break;
+            case "Cosmetics":
+                verificationDays = 3;
+                break;
+            case "Personal Hygiene":
+                verificationDays = 2;
+                break;
+            case "Agriculture":
+                verificationDays = 4;
+                break;
+        }
+
+        // Show a message with the time to verify
+        resultText.text = "Sending to agency for verification... Takes " + verificationDays + " in-game days.";
+
+        // Start the verification process
+        StartCoroutine(VerificationProcess(selectedUse));
+    }
+
+    // Coroutine to simulate waiting for agency verification
+    IEnumerator VerificationProcess(string selectedUse)
+    {
+        // Simulate the waiting period for in-game days (1 real second = 1 in-game day here)
+        for (int day = 1; day <= verificationDays; day++)
+        {
+            resultText.text = "Waiting... Day " + day + " of " + verificationDays;
+            yield return new WaitForSeconds(1f); // Simulate 1 in-game day
+        }
+
+        // After the waiting period, check if the guess was correct
         if (selectedUse == correctUse)
         {
-            resultText.text = "Correct! The mixture is used for " + correctUse + ".";
+            resultText.text = "Verification Complete: Correct! The mixture is used for " + correctUse + ".";
         }
         else
         {
-            resultText.text = "Incorrect! The mixture is not used for " + selectedUse + ".";
+            resultText.text = "Verification Complete: Incorrect! The mixture is not used for " + selectedUse + ".";
         }
-
-        // You can implement additional logic here, like sending the mixture for verification
     }
 
     // Function to activate the buttons
