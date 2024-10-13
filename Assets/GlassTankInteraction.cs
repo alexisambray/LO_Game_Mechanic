@@ -1,6 +1,7 @@
-using System.Collections;
+using TMPro;
 using UnityEngine;
-using TMPro; // For TextMeshPro text
+
+using System.Collections;
 using UnityEngine.UI; // For buttons
 
 public class GlassTankInteraction : MonoBehaviour
@@ -19,11 +20,21 @@ public class GlassTankInteraction : MonoBehaviour
     // Prevent clicking while processing
     private bool isProcessing = false;
 
-    // Start is called before the first frame update
+    // Example: Correct use for the mixture (can be dynamic or come from an external source)
+    private string correctUse = "Food/Beverage"; // Set this dynamically based on the mixture
+
     void Start()
     {
         // Initially hide the buttons
         HideUseButtons();
+
+        // Add listeners for the buttons
+        foodButton.onClick.AddListener(() => GuessUse("Food/Beverage"));
+        medicineButton.onClick.AddListener(() => GuessUse("Medicine"));
+        healthCleaningButton.onClick.AddListener(() => GuessUse("Health Cleaning"));
+        cosmeticsButton.onClick.AddListener(() => GuessUse("Cosmetics"));
+        personalHygieneButton.onClick.AddListener(() => GuessUse("Personal Hygiene"));
+        agricultureButton.onClick.AddListener(() => GuessUse("Agriculture"));
     }
 
     // On object click
@@ -56,6 +67,25 @@ public class GlassTankInteraction : MonoBehaviour
         isProcessing = false;
     }
 
+    // Function to handle the player's guess
+    void GuessUse(string selectedUse)
+    {
+        // Hide buttons after selection
+        HideUseButtons();
+
+        // Check if the guessed use is correct
+        if (selectedUse == correctUse)
+        {
+            resultText.text = "Correct! The mixture is used for " + correctUse + ".";
+        }
+        else
+        {
+            resultText.text = "Incorrect! The mixture is not used for " + selectedUse + ".";
+        }
+
+        // You can implement additional logic here, like sending the mixture for verification
+    }
+
     // Function to activate the buttons
     void ShowUseButtons()
     {
@@ -67,7 +97,7 @@ public class GlassTankInteraction : MonoBehaviour
         agricultureButton.gameObject.SetActive(true);
     }
 
-    // Function to hide the buttons at the start
+    // Function to hide the buttons
     void HideUseButtons()
     {
         foodButton.gameObject.SetActive(false);
