@@ -5,20 +5,22 @@ using UnityEngine.UI;
 
 public class GlassTankInteraction : MonoBehaviour
 {
-    // Reference to the text that will display results
     public TMP_Text resultText;
     public Button homogeneousButton;
     public Button heterogeneousButton;
     public GameObject useCategoryButtons;
-    public GameObject shelfItem; // Example: Vinegar item to be unlocked
+    public GameObject shelfItems; // Parent GameObject for all shelf items
 
-    private string correctUseCategory = "Food"; // Correct use category for vinegar
-    private bool isProcessing = false; // Prevents clicking multiple times
-    private bool appearanceGuessed = false; // To prevent re-asking for appearance
+    private string correctUseCategory = ""; // Dynamically set
+    private string correctAppearance = ""; // Dynamically set
+    private string mixtureType = ""; // True Solution, Suspension, or Colloid
+
+    private bool isProcessing = false;
+    private bool appearanceGuessed = false;
     private string guessedAppearance = "";
-    private bool dfaAnalysisStarted = false; // Prevent re-clicking DFA
 
-    // Days required for DFA to process each category
+    private bool dfaAnalysisStarted = false;
+
     private int daysToCheck = 0;
 
     // On object click (start mixing process)
@@ -26,26 +28,34 @@ public class GlassTankInteraction : MonoBehaviour
     {
         if (!isProcessing && !dfaAnalysisStarted)
         {
-            // Start the centrifuge process
             StartCoroutine(CentrifugeProcess());
         }
     }
 
-    // Coroutine to simulate the centrifuge process
+    void ShowMixtureSprite(string itemName)
+    {
+        Transform mixtureItem = shelfItems.transform.Find(itemName);
+        if (mixtureItem != null)
+        {
+            mixtureItem.gameObject.SetActive(true); // Show the sprite after mixing
+        }
+    }
+
     IEnumerator CentrifugeProcess()
     {
         isProcessing = true;
         appearanceGuessed = false; // Reset appearance guess
+        dfaAnalysisStarted = false; // Reset DFA analysis flag
 
-        // Start mixing
         resultText.text = "Mixing...";
         yield return new WaitForSeconds(3f); // Simulate mixing
 
-        // Ask for the appearance (homogeneous or heterogeneous)
-        ShowAppearanceButtons();
+        // Show the mixture sprite (Vinegar or other) after mixing
+        ShowMixtureSprite("VinegarSprite"); // Pass the correct sprite name dynamically
+
+        ShowAppearanceButtons(); // Ask for the appearance
     }
 
-    // Show the appearance guessing buttons
     void ShowAppearanceButtons()
     {
         resultText.text = "What is the appearance?";
@@ -53,7 +63,6 @@ public class GlassTankInteraction : MonoBehaviour
         heterogeneousButton.gameObject.SetActive(true);
     }
 
-    // Handle homogeneous button click
     public void OnHomogeneousButtonClick()
     {
         if (!appearanceGuessed)
@@ -63,7 +72,6 @@ public class GlassTankInteraction : MonoBehaviour
         }
     }
 
-    // Handle heterogeneous button click
     public void OnHeterogeneousButtonClick()
     {
         if (!appearanceGuessed)
@@ -73,82 +81,90 @@ public class GlassTankInteraction : MonoBehaviour
         }
     }
 
-    // Process the guessed appearance
     void ProcessAppearanceGuess()
     {
-        // Hide the appearance guessing buttons
         homogeneousButton.gameObject.SetActive(false);
         heterogeneousButton.gameObject.SetActive(false);
 
-        // Mark that the appearance has been guessed
         appearanceGuessed = true;
 
-        // Show the result of appearance guessing
-        resultText.text = $"Analysis Complete: The mixture is {guessedAppearance}.";
-
-        // Wait for a short moment before showing the use category buttons
-        StartCoroutine(ShowUseCategoryButtons());
+        // Correctly handle the appearance guess comparison
+        if (guessedAppearance.Equals(correctAppearance))
+        {
+            resultText.text = $"Analysis Complete: The mixture is {guessedAppearance}.";
+            StartCoroutine(ShowUseCategoryButtons()); // Wait and show use categories
+        }
+        else
+        {
+            resultText.text = "Wrong appearance guess. Try again.";
+            StartCoroutine(AllowRetryAfterWrongAppearance());
+        }
     }
 
-    // Coroutine to delay showing the use category buttons
     IEnumerator ShowUseCategoryButtons()
     {
-        yield return new WaitForSeconds(2f); // Wait for 2 seconds
+        yield return new WaitForSeconds(2f);
         resultText.text = "Send item to DFA for analysis.";
-        yield return new WaitForSeconds(2f); // Simulate sending item to DFA
+        yield return new WaitForSeconds(2f);
         resultText.text = "What is the use category?";
-        useCategoryButtons.SetActive(true); // Show the use category buttons
-        isProcessing = false; // Allow further interactions after this stage
+        useCategoryButtons.SetActive(true);
+        isProcessing = false;
     }
 
-    // Category guess functions with associated days for DFA processing
+    IEnumerator AllowRetryAfterWrongAppearance()
+    {
+        yield return new WaitForSeconds(3f);
+        resultText.text = "Try guessing the appearance again!";
+        appearanceGuessed = false;
+        ShowAppearanceButtons();
+        isProcessing = false;
+    }
+
     public void GuessFood()
     {
-        daysToCheck = 3; // Food takes 3 days
+        daysToCheck = 3;
         CheckUseCategoryGuess("Food");
     }
 
     public void GuessMedicine()
     {
-        daysToCheck = 4; // Medicine takes 4 days
+        daysToCheck = 4;
         CheckUseCategoryGuess("Medicine");
     }
 
     public void GuessCosmetics()
     {
-        daysToCheck = 1; // Cosmetics takes 1 day
+        daysToCheck = 1;
         CheckUseCategoryGuess("Cosmetics");
     }
 
     public void GuessPersonalHygiene()
     {
-        daysToCheck = 5; // Personal hygiene takes 5 days
+        daysToCheck = 5;
         CheckUseCategoryGuess("Personal Hygiene");
     }
 
     public void GuessAgriculture()
     {
-        daysToCheck = 6; // Agriculture takes 6 days
+        daysToCheck = 6;
         CheckUseCategoryGuess("Agriculture");
     }
 
     public void GuessHealthCleaning()
     {
-        daysToCheck = 2; // Health cleaning takes 2 days
+        daysToCheck = 2;
         CheckUseCategoryGuess("Health Cleaning");
     }
 
-    // Function to check if the use category guess is correct
     private void CheckUseCategoryGuess(string guessedCategory)
     {
-        // Hide use category buttons after guess
         useCategoryButtons.SetActive(false);
 
-        // Check if the guess matches the correct use category
         if (guessedCategory == correctUseCategory)
         {
             resultText.text = $"Item sent to DFA for approval. Checking takes {daysToCheck} days.";
-            StartCoroutine(WaitForDFAApproval());
+            dfaAnalysisStarted = true;
+            StartCoroutine(WaitForDFAApproval("VinegarSprite")); // Pass the correct shelf item name here
         }
         else
         {
@@ -156,29 +172,42 @@ public class GlassTankInteraction : MonoBehaviour
         }
     }
 
-    // Coroutine for DFA approval process
-    IEnumerator WaitForDFAApproval()
+    IEnumerator WaitForDFAApproval(string itemName)
     {
-        dfaAnalysisStarted = true;
-        yield return new WaitForSeconds(daysToCheck); // Simulate the DFA process
-        resultText.text = "DFA item approved. Item is unlocked in the shelf!";
-        UnlockItemOnShelf(); // Unlock the item
-        dfaAnalysisStarted = false;
+        yield return new WaitForSeconds(daysToCheck);
+        resultText.text = $"DFA item approved. The mixture is a {mixtureType}!";
+        UnlockItemOnShelf(itemName); // Pass the itemName to unlock the correct shelf item
     }
 
-    // Method to unlock the item on the shelf
-    void UnlockItemOnShelf()
+    // Unlock the item based on the guessed mixture (name of the item to unlock)
+    void UnlockItemOnShelf(string itemName)
     {
-        // Activate the shelf item
+        Transform shelfItem = shelfItems.transform.Find(itemName); // Find the item by name in the shelfItems parent
+
         if (shelfItem != null)
         {
-            shelfItem.SetActive(true); // This will show the item on the shelf
+            shelfItem.gameObject.SetActive(true); // Activate the correct item on the shelf
         }
     }
 
-    // Set correct use category for the current mixture
-    public void SetCorrectUseCategory(string category)
+    // Method to initialize mixture properties and start centrifuge
+    public void StartCentrifugeForMixture(string appearance, string category, string type)
     {
-        correctUseCategory = category; // Call this method before the centrifuge starts
+        SetMixtureProperties(appearance, category, type);
+        StartCoroutine(CentrifugeProcess());
+    }
+
+    void StartCentrifugeForVinegar()
+    {
+        SetMixtureProperties("homogeneous", "Food", "True Solution"); // Correct properties for vinegar
+        StartCoroutine(CentrifugeProcess());
+    }
+
+
+    public void SetMixtureProperties(string appearance, string category, string type)
+    {
+        correctAppearance = appearance;
+        correctUseCategory = category;
+        mixtureType = type;
     }
 }
