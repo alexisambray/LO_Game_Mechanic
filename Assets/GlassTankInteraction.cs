@@ -10,7 +10,7 @@ public class GlassTankInteraction : MonoBehaviour
     public Button homogeneousButton;
     public Button heterogeneousButton;
     public GameObject useCategoryButtons;
-    private string correctUseCategory = "Food";
+    private string correctUseCategory = "Food"; // Default correct use category, update it dynamically as needed
 
     private bool isProcessing = false; // Prevents clicking multiple times
     private bool appearanceGuessed = false; // To prevent re-asking for appearance
@@ -96,6 +96,7 @@ public class GlassTankInteraction : MonoBehaviour
         isProcessing = false; // Allow further interactions after this stage
     }
 
+    // Category guess functions
     public void GuessFood()
     {
         CheckUseCategoryGuess("Food");
@@ -121,6 +122,13 @@ public class GlassTankInteraction : MonoBehaviour
         CheckUseCategoryGuess("Agriculture");
     }
 
+    // New GuessHealthCleaning method
+    public void GuessHealthCleaning()
+    {
+        CheckUseCategoryGuess("Health Cleaning");
+    }
+
+    // Function to check if the use category guess is correct
     private void CheckUseCategoryGuess(string guessedCategory)
     {
         // Hide use category buttons after guess
@@ -130,13 +138,15 @@ public class GlassTankInteraction : MonoBehaviour
         if (guessedCategory == correctUseCategory)
         {
             resultText.text = "Correct category!";
-            // You can add further logic here for what happens next
+            // Additional logic for correct category guess can be added here
         }
         else
         {
             resultText.text = "Wrong category. Try again!";
         }
     }
+
+    // Set correct use category for the current mixture
     public void SetCorrectUseCategory(string category)
     {
         correctUseCategory = category; // Call this method before the centrifuge starts
