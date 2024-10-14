@@ -1,50 +1,26 @@
 using System.Collections;
 using UnityEngine;
-using TMPro; // For TextMeshPro text
-using UnityEngine.UI; // For buttons
+using TMPro;
+using UnityEngine.UI;
 
 public class GlassTankInteraction : MonoBehaviour
 {
-    // Reference to the result text
+    // Reference to the text that will display results
     public TMP_Text resultText;
+    public Button homogeneousButton;
+    public Button heterogeneousButton;
+    public GameObject useCategoryButtons;
 
-    // References to the buttons
-    public Button foodButton;
-    public Button medicineButton;
-    public Button healthCleaningButton;
-    public Button cosmeticsButton;
-    public Button personalHygieneButton;
-    public Button agricultureButton;
+    private bool isProcessing = false; // Prevents clicking multiple times
+    private bool appearanceGuessed = false; // To prevent re-asking for appearance
+    private string guessedAppearance = "";
 
-    // Prevent clicking while processing
-    private bool isProcessing = false;
-
-    // Example: Correct use for the mixture (can be dynamic)
-    private string correctUse = "Food/Beverage"; // Set this dynamically based on the mixture
-
-    // Time delay for verifying the mixture (in in-game days)
-    private int verificationDays = 0;
-
-    void Start()
-    {
-        // Initially hide the buttons
-        HideUseButtons();
-
-        // Add listeners for the buttons
-        foodButton.onClick.AddListener(() => GuessUse("Food/Beverage"));
-        medicineButton.onClick.AddListener(() => GuessUse("Medicine"));
-        healthCleaningButton.onClick.AddListener(() => GuessUse("Health Cleaning"));
-        cosmeticsButton.onClick.AddListener(() => GuessUse("Cosmetics"));
-        personalHygieneButton.onClick.AddListener(() => GuessUse("Personal Hygiene"));
-        agricultureButton.onClick.AddListener(() => GuessUse("Agriculture"));
-    }
-
-    // On object click
+    // On object click (start mixing process)
     private void OnMouseDown()
     {
         if (!isProcessing)
         {
-            // Start the analysis coroutine
+            // Start the centrifuge process
             StartCoroutine(CentrifugeProcess());
         }
     }
@@ -53,98 +29,69 @@ public class GlassTankInteraction : MonoBehaviour
     IEnumerator CentrifugeProcess()
     {
         isProcessing = true;
+        appearanceGuessed = false; // Reset appearance guess
 
-        // Display "Mixing..." during the centrifuge process
+        // Start mixing
         resultText.text = "Mixing...";
+        yield return new WaitForSeconds(3f); // Simulate mixing
 
-        // Simulate analysis process (wait 3 seconds)
-        yield return new WaitForSeconds(3f);
-
-        // After processing, display the result
-        resultText.text = "Analysis Complete: The mixture is homogeneous.";
-
-        // Show the buttons for the player to guess the use
-        ShowUseButtons();
-
-        isProcessing = false;
+        // Ask for the appearance (homogeneous or heterogeneous)
+        ShowAppearanceButtons();
     }
 
-    // Function to handle the player's guess
-    void GuessUse(string selectedUse)
+    // Show the appearance guessing buttons
+    void ShowAppearanceButtons()
     {
-        // Hide buttons after selection
-        HideUseButtons();
-
-        // Set the verification time based on the selected use category
-        switch (selectedUse)
-        {
-            case "Food/Beverage":
-                verificationDays = 3;
-                break;
-            case "Medicine":
-                verificationDays = 4;
-                break;
-            case "Health Cleaning":
-                verificationDays = 2;
-                break;
-            case "Cosmetics":
-                verificationDays = 3;
-                break;
-            case "Personal Hygiene":
-                verificationDays = 2;
-                break;
-            case "Agriculture":
-                verificationDays = 4;
-                break;
-        }
-
-        // Show a message with the time to verify
-        resultText.text = "Sending to agency for verification... Takes " + verificationDays + " in-game days.";
-
-        // Start the verification process
-        StartCoroutine(VerificationProcess(selectedUse));
+        resultText.text = "What is the appearance?";
+        homogeneousButton.gameObject.SetActive(true);
+        heterogeneousButton.gameObject.SetActive(true);
     }
 
-    // Coroutine to simulate waiting for agency verification
-    IEnumerator VerificationProcess(string selectedUse)
+    // Handle homogeneous button click
+    public void OnHomogeneousButtonClick()
     {
-        // Simulate the waiting period for in-game days (1 real second = 1 in-game day here)
-        for (int day = 1; day <= verificationDays; day++)
+        if (!appearanceGuessed)
         {
-            resultText.text = "Waiting... Day " + day + " of " + verificationDays;
-            yield return new WaitForSeconds(1f); // Simulate 1 in-game day
-        }
-
-        // After the waiting period, check if the guess was correct
-        if (selectedUse == correctUse)
-        {
-            resultText.text = "Verification Complete: Correct! The mixture is used for " + correctUse + ".";
-        }
-        else
-        {
-            resultText.text = "Verification Complete: Incorrect! The mixture is not used for " + selectedUse + ".";
+            guessedAppearance = "homogeneous";
+            ProcessAppearanceGuess();
         }
     }
 
-    // Function to activate the buttons
-    void ShowUseButtons()
+    // Handle heterogeneous button click
+    public void OnHeterogeneousButtonClick()
     {
-        foodButton.gameObject.SetActive(true);
-        medicineButton.gameObject.SetActive(true);
-        healthCleaningButton.gameObject.SetActive(true);
-        cosmeticsButton.gameObject.SetActive(true);
-        personalHygieneButton.gameObject.SetActive(true);
-        agricultureButton.gameObject.SetActive(true);
+        if (!appearanceGuessed)
+        {
+            guessedAppearance = "heterogeneous";
+            ProcessAppearanceGuess();
+        }
     }
 
-    // Function to hide the buttons
-    void HideUseButtons()
+    // Process the guessed appearance
+    void ProcessAppearanceGuess()
     {
-        foodButton.gameObject.SetActive(false);
-        medicineButton.gameObject.SetActive(false);
-        healthCleaningButton.gameObject.SetActive(false);
-        cosmeticsButton.gameObject.SetActive(false);
-        personalHygieneButton.gameObject.SetActive(false);
-        agricultureButton.gameObject.SetActive(false);
+        // Hide the buttons
+        homogeneousButton.gameObject.SetActive(false);
+        heterogeneousButton.gameObject.SetActive(false);
+
+        // Mark that the appearance has been guessed
+        appearanceGuessed = true;
+
+        // Show the result of appearance guessing
+        resultText.text = $"Analysis Complete: The mixture is {guessedAppearance}.";
+
+        // Wait for a short moment before showing the use category buttons
+        StartCoroutine(ShowUseCategoryButtons());
+    }
+
+    // Coroutine to delay showing the use category buttons
+    IEnumerator ShowUseCategoryButtons()
+    {
+        Debug.Log("Waiting to show use category buttons...");
+        yield return new WaitForSeconds(2f); // Wait for 2 seconds
+        resultText.text = "What is the use category?";
+        useCategoryButtons.SetActive(true); // Show the use category buttons
+        Debug.Log("Use category buttons are now shown.");
+        isProcessing = false; // Allow further interactions after this stage
     }
 }
