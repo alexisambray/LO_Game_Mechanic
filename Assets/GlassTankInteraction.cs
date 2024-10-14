@@ -10,19 +10,21 @@ public class GlassTankInteraction : MonoBehaviour
     public Button homogeneousButton;
     public Button heterogeneousButton;
     public GameObject useCategoryButtons;
+    public GameObject shelfItem; // Example: Vinegar item to be unlocked
 
-    // Reference for items on the shelf (to be unlocked after correct guess)
-    public GameObject shelfItem; // Example: Coffee item to be unlocked
-    private string correctUseCategory = "Food"; // Default correct use category, update it dynamically as needed
-
+    private string correctUseCategory = "Food"; // Correct use category for vinegar
     private bool isProcessing = false; // Prevents clicking multiple times
     private bool appearanceGuessed = false; // To prevent re-asking for appearance
     private string guessedAppearance = "";
+    private bool dfaAnalysisStarted = false; // Prevent re-clicking DFA
+
+    // Days required for DFA to process each category
+    private int daysToCheck = 0;
 
     // On object click (start mixing process)
     private void OnMouseDown()
     {
-        if (!isProcessing)
+        if (!isProcessing && !dfaAnalysisStarted)
         {
             // Start the centrifuge process
             StartCoroutine(CentrifugeProcess());
@@ -74,7 +76,7 @@ public class GlassTankInteraction : MonoBehaviour
     // Process the guessed appearance
     void ProcessAppearanceGuess()
     {
-        // Hide the buttons
+        // Hide the appearance guessing buttons
         homogeneousButton.gameObject.SetActive(false);
         heterogeneousButton.gameObject.SetActive(false);
 
@@ -92,42 +94,47 @@ public class GlassTankInteraction : MonoBehaviour
     IEnumerator ShowUseCategoryButtons()
     {
         yield return new WaitForSeconds(2f); // Wait for 2 seconds
-        resultText.text = "Sending item to DFA for analysis...";
-        yield return new WaitForSeconds(3f); // Simulate sending item to DFA
-
+        resultText.text = "Send item to DFA for analysis.";
+        yield return new WaitForSeconds(2f); // Simulate sending item to DFA
         resultText.text = "What is the use category?";
         useCategoryButtons.SetActive(true); // Show the use category buttons
         isProcessing = false; // Allow further interactions after this stage
     }
 
-    // Category guess functions
+    // Category guess functions with associated days for DFA processing
     public void GuessFood()
     {
+        daysToCheck = 3; // Food takes 3 days
         CheckUseCategoryGuess("Food");
     }
 
     public void GuessMedicine()
     {
+        daysToCheck = 4; // Medicine takes 4 days
         CheckUseCategoryGuess("Medicine");
     }
 
     public void GuessCosmetics()
     {
+        daysToCheck = 1; // Cosmetics takes 1 day
         CheckUseCategoryGuess("Cosmetics");
     }
 
     public void GuessPersonalHygiene()
     {
+        daysToCheck = 5; // Personal hygiene takes 5 days
         CheckUseCategoryGuess("Personal Hygiene");
     }
 
     public void GuessAgriculture()
     {
+        daysToCheck = 6; // Agriculture takes 6 days
         CheckUseCategoryGuess("Agriculture");
     }
 
     public void GuessHealthCleaning()
     {
+        daysToCheck = 2; // Health cleaning takes 2 days
         CheckUseCategoryGuess("Health Cleaning");
     }
 
@@ -140,13 +147,23 @@ public class GlassTankInteraction : MonoBehaviour
         // Check if the guess matches the correct use category
         if (guessedCategory == correctUseCategory)
         {
-            resultText.text = "DFA item approved. Item is unlocked in the shelf!";
-            UnlockItemOnShelf(); // Unlock item in the shelf
+            resultText.text = $"Item sent to DFA for approval. Checking takes {daysToCheck} days.";
+            StartCoroutine(WaitForDFAApproval());
         }
         else
         {
             resultText.text = "Wrong category. Try again!";
         }
+    }
+
+    // Coroutine for DFA approval process
+    IEnumerator WaitForDFAApproval()
+    {
+        dfaAnalysisStarted = true;
+        yield return new WaitForSeconds(daysToCheck); // Simulate the DFA process
+        resultText.text = "DFA item approved. Item is unlocked in the shelf!";
+        UnlockItemOnShelf(); // Unlock the item
+        dfaAnalysisStarted = false;
     }
 
     // Method to unlock the item on the shelf
