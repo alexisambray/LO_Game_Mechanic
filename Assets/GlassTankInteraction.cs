@@ -10,6 +10,7 @@ public class GlassTankInteraction : MonoBehaviour
     public Button homogeneousButton;
     public Button heterogeneousButton;
     public GameObject useCategoryButtons;
+    private string correctUseCategory = "Food";
 
     private bool isProcessing = false; // Prevents clicking multiple times
     private bool appearanceGuessed = false; // To prevent re-asking for appearance
@@ -93,5 +94,51 @@ public class GlassTankInteraction : MonoBehaviour
         useCategoryButtons.SetActive(true); // Show the use category buttons
         Debug.Log("Use category buttons are now shown.");
         isProcessing = false; // Allow further interactions after this stage
+    }
+
+    public void GuessFood()
+    {
+        CheckUseCategoryGuess("Food");
+    }
+
+    public void GuessMedicine()
+    {
+        CheckUseCategoryGuess("Medicine");
+    }
+
+    public void GuessCosmetics()
+    {
+        CheckUseCategoryGuess("Cosmetics");
+    }
+
+    public void GuessPersonalHygiene()
+    {
+        CheckUseCategoryGuess("Personal Hygiene");
+    }
+
+    public void GuessAgriculture()
+    {
+        CheckUseCategoryGuess("Agriculture");
+    }
+
+    private void CheckUseCategoryGuess(string guessedCategory)
+    {
+        // Hide use category buttons after guess
+        useCategoryButtons.SetActive(false);
+
+        // Check if the guess matches the correct use category
+        if (guessedCategory == correctUseCategory)
+        {
+            resultText.text = "Correct category!";
+            // You can add further logic here for what happens next
+        }
+        else
+        {
+            resultText.text = "Wrong category. Try again!";
+        }
+    }
+    public void SetCorrectUseCategory(string category)
+    {
+        correctUseCategory = category; // Call this method before the centrifuge starts
     }
 }
