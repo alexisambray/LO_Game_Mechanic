@@ -32,6 +32,11 @@ public class GlassTankInteraction : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        StartCentrifugeForVinegar(); // Start the vinegar centrifuge process automatically on scene load
+    }
+
     void ShowMixtureSprite(string itemName)
     {
         Transform mixtureItem = shelfItems.transform.Find(itemName);
@@ -113,7 +118,7 @@ public class GlassTankInteraction : MonoBehaviour
 
     IEnumerator AllowRetryAfterWrongAppearance()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f); // Shortened wait to 2 seconds
         resultText.text = "Try guessing the appearance again!";
         appearanceGuessed = false;
         ShowAppearanceButtons();
@@ -179,7 +184,6 @@ public class GlassTankInteraction : MonoBehaviour
         UnlockItemOnShelf(itemName); // Pass the itemName to unlock the correct shelf item
     }
 
-    // Unlock the item based on the guessed mixture (name of the item to unlock)
     void UnlockItemOnShelf(string itemName)
     {
         Transform shelfItem = shelfItems.transform.Find(itemName); // Find the item by name in the shelfItems parent
@@ -202,7 +206,6 @@ public class GlassTankInteraction : MonoBehaviour
         SetMixtureProperties("homogeneous", "Food", "True Solution"); // Correct properties for vinegar
         StartCoroutine(CentrifugeProcess());
     }
-
 
     public void SetMixtureProperties(string appearance, string category, string type)
     {
