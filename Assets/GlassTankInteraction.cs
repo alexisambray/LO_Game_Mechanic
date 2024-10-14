@@ -10,6 +10,9 @@ public class GlassTankInteraction : MonoBehaviour
     public Button homogeneousButton;
     public Button heterogeneousButton;
     public GameObject useCategoryButtons;
+
+    // Reference for items on the shelf (to be unlocked after correct guess)
+    public GameObject shelfItem; // Example: Coffee item to be unlocked
     private string correctUseCategory = "Food"; // Default correct use category, update it dynamically as needed
 
     private bool isProcessing = false; // Prevents clicking multiple times
@@ -88,11 +91,12 @@ public class GlassTankInteraction : MonoBehaviour
     // Coroutine to delay showing the use category buttons
     IEnumerator ShowUseCategoryButtons()
     {
-        Debug.Log("Waiting to show use category buttons...");
         yield return new WaitForSeconds(2f); // Wait for 2 seconds
+        resultText.text = "Sending item to DFA for analysis...";
+        yield return new WaitForSeconds(3f); // Simulate sending item to DFA
+
         resultText.text = "What is the use category?";
         useCategoryButtons.SetActive(true); // Show the use category buttons
-        Debug.Log("Use category buttons are now shown.");
         isProcessing = false; // Allow further interactions after this stage
     }
 
@@ -122,7 +126,6 @@ public class GlassTankInteraction : MonoBehaviour
         CheckUseCategoryGuess("Agriculture");
     }
 
-    // New GuessHealthCleaning method
     public void GuessHealthCleaning()
     {
         CheckUseCategoryGuess("Health Cleaning");
@@ -137,12 +140,22 @@ public class GlassTankInteraction : MonoBehaviour
         // Check if the guess matches the correct use category
         if (guessedCategory == correctUseCategory)
         {
-            resultText.text = "Correct category!";
-            // Additional logic for correct category guess can be added here
+            resultText.text = "DFA item approved. Item is unlocked in the shelf!";
+            UnlockItemOnShelf(); // Unlock item in the shelf
         }
         else
         {
             resultText.text = "Wrong category. Try again!";
+        }
+    }
+
+    // Method to unlock the item on the shelf
+    void UnlockItemOnShelf()
+    {
+        // Activate the shelf item
+        if (shelfItem != null)
+        {
+            shelfItem.SetActive(true); // This will show the item on the shelf
         }
     }
 
