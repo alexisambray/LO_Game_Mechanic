@@ -5,7 +5,6 @@ using static MixtureStat;
 
 public class Tool : MonoBehaviour
 {
-    private static Dictionary<string, SharedStats> sharedStatsDict = new Dictionary<string, SharedStats>();
     public string toolName;
     
     private void Awake()
@@ -13,15 +12,26 @@ public class Tool : MonoBehaviour
         toolName = gameObject.name;
     }
 
-    public void ApplyEffect(GameObject selectedObject)
+    public void ApplyEffect()
     {
-        Mixture mixture  = selectedObject.GetComponent<Mixture>();
-        if (mixture == null)
+        GameObject selectedObject = GameManager.Instance.selectedObject;
+
+        
+        if (selectedObject != null)
         {
-            Debug.LogError("Selected object does not have a MixtureObject component.");
-            return;
+            Mixture mixture = selectedObject.GetComponent<Mixture>();
+            if (mixture != null) //if there is a selected object, get stats
+            {
+                MixtureStat mixtureStat = mixture.mixtureStat;
+                //if (mixtureStat == null)
+                //{
+                //    Debug.LogError("Selected object does not have a MixtureStat component.");
+                //    return;
+                //}
+                mixtureStat.UpdateSharedStats(toolName);
+
+            }
         }
-       
-        //if(!sharedStatsDict.ContainsKey(mixture.mixtureStat)) {
+        
     }
 }

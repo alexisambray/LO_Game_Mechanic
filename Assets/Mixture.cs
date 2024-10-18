@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class Mixture : MonoBehaviour
 {
-    private MixtureStat mixtureStat;
+    public MixtureStat mixtureStat;
+    private string mixtureKey;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         mixtureStat = new MixtureStat();
+        mixtureKey = mixtureStat.GenerateKey();
 
+        if (MixtureStat.sharedStatsDict.ContainsKey(mixtureKey))
+        {
+            MixtureStat.SharedStats sharedStats = MixtureStat.sharedStatsDict[mixtureKey];
+            Debug.Log($"{gameObject.name} - ItemFound: {sharedStats.itemFound}");
+            Debug.Log($"{gameObject.name} - AppearanceFound: {sharedStats.appearanceFound}");
+            Debug.Log($"{gameObject.name} - UseFound: {sharedStats.useFound}");
+        }
 
-        // Log initial stats
-        Debug.Log($"{gameObject.name} - ItemFound: {mixtureStat.ItemFound}");
-        Debug.Log($"{gameObject.name} - AppearanceFound: {mixtureStat.AppearanceFound}");
-        Debug.Log($"{gameObject.name} - UseFound: {mixtureStat.UseFound}");
+        
     }
 
     public MixtureStat GetMixtureStat()

@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
+using static MixtureStat;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+    public bool shelfComplete { get; set; }
+    public GameObject selectedObject;
+    public Dictionary<string, SharedStats> sharedStatsDict = new Dictionary<string, SharedStats>();
+
 
     public static GameManager Instance
     {
@@ -19,10 +24,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //Game state variables
-    public bool shelfComplete { get; set; }
-    public GameObject selectedObject;
-
+    
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     private void Update()
     {
         HandleInteraction();
@@ -71,8 +75,14 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Tool"))
                 {
                     // Get the clicked object
-                    GameObject clickedObject = hit.collider.gameObject;
+                    Tool selectedTool = hit.collider.gameObject.GetComponent<Tool>();
 
+                    if (selectedObject != null && selectedTool != null) {
+                        ApplyToolEffect(selectedTool);
+
+                        //MixtureStat mixtureStat = selectedObject.GetComponent<Mixture>().mixtureStat;
+                        //mixtureStat.UpdateSharedStats(selectedTool.toolName);
+                    }
                     // Compare stats
                     //CompareStats(clickedObject);
                 }
@@ -92,7 +102,7 @@ public class GameManager : MonoBehaviour
     {
         if(selectedObject != null)
         {
-            tool.ApplyEffect(selectedObject);
+            tool.ApplyEffect();
         }
         else
         {

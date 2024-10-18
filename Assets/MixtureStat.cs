@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Unity.Burst;
 using UnityEngine;
 
-public class MixtureStat
+public class MixtureStat: MonoBehaviour 
 {
     // Criteria
-    private static Dictionary<string, SharedStats> sharedStatsDict = new Dictionary<string, SharedStats>();
+    public static Dictionary<string, SharedStats> sharedStatsDict = new Dictionary<string, SharedStats>();
     private string mixtureKey;
 
     // Appearance
@@ -46,7 +46,7 @@ public class MixtureStat
         }
     }
 
-    private string GenerateKey()
+    public string GenerateKey()
     {
         return $"{trueSolution}_{suspension}_{colloid}_{foodAndBeverage}_{medicine}_{cosmetic}_{cleaning}_{hygiene}_{agriculture}";
     }
@@ -177,5 +177,23 @@ public class MixtureStat
         public bool itemVisible { get; set; } = false;
         public bool appearanceFound { get; set; } = false;
         public bool useFound { get; set; } = false;
+    }
+
+    public void UpdateSharedStats(string toolName)
+    {
+        if (sharedStatsDict.ContainsKey(mixtureKey))
+        {
+            SharedStats stats = sharedStatsDict[mixtureKey];
+            //Appearance
+            if (toolName == "Flashlight" && colloid == true) { AppearanceFound = true; }
+            else if (toolName == "Centrifuge" && (suspension == true || trueSolution == true)) { AppearanceFound = true; }
+            else if (toolName == "Observe" && suspension == true) { AppearanceFound = true;  }
+
+            // Log updated stats
+            Debug.Log("Analyzer applied: Updated shared stats");
+            Debug.Log($" - ItemFound: {ItemFound}");
+            Debug.Log($" - AppearanceFound: {AppearanceFound}");
+            Debug.Log($" - UseFound: {UseFound}");
+        }
     }
 }
