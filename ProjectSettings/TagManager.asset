@@ -43,3 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Tools
+    uniqueID: 2414904819
+    locked: 0
