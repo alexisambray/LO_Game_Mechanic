@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour
                             if (selectedObject != null)
                             {
                                 ApplyToolEffect(selectedTool);
+                                selectedObject = null;
                             }
                             else
                             {

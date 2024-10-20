@@ -6,11 +6,22 @@ public class Mixture : MonoBehaviour
 {
     public MixtureStat mixtureStat;
     private string mixtureKey;
+    public int index = -1;
     // Start is called before the first frame update
     private void Start()
     {
-        mixtureStat = new MixtureStat();
-        mixtureKey = mixtureStat.GenerateKey();
+        //if manual index, hardcode it as such
+        if (index >= 0 && index <= 17)
+        {
+            mixtureStat = new MixtureStat(index);
+            mixtureKey = mixtureStat.GenerateKey();
+        }
+        else
+        {
+            mixtureStat = new MixtureStat();
+            mixtureKey = mixtureStat.GenerateKey();
+        }
+        
 
         if (MixtureStat.sharedStatsDict.ContainsKey(mixtureKey))
         {

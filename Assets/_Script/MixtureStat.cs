@@ -22,6 +22,7 @@ public class MixtureStat: MonoBehaviour
     public bool hygiene { get; set; }
     public bool agriculture { get; set; }
 
+    public int manualIndex = -1;
     public MixtureStat()
     {
         // Initialize all variables with default values
@@ -39,6 +40,32 @@ public class MixtureStat: MonoBehaviour
         initializeStat(); //initialize stats for the mixture
 
         mixtureKey = GenerateKey(); 
+
+        if (!sharedStatsDict.ContainsKey(mixtureKey))
+        {
+            sharedStatsDict[mixtureKey] = new SharedStats();
+        }
+    }
+
+    public MixtureStat(int chosenIndex)
+    {
+        // Initialize all variables with default values
+        trueSolution = false;
+        suspension = false;
+        colloid = false;
+
+        foodAndBeverage = false;
+        medicine = false;
+        cosmetic = false;
+        cleaning = false;
+        hygiene = false;
+        agriculture = false;
+
+        manualIndex = chosenIndex;
+
+        initializeStat(); //initialize stats for the mixture
+
+        mixtureKey = GenerateKey();
 
         if (!sharedStatsDict.ContainsKey(mixtureKey))
         {
@@ -74,7 +101,8 @@ public class MixtureStat: MonoBehaviour
 
     public void initializeStat()
     {
-        int randomindex = Random.Range(0, 18);
+        //int randomindex = Random.Range(0, 18);
+        int randomindex = (manualIndex >= 0 && manualIndex <= 17) ? manualIndex : Random.Range(0, 18);
 
         switch (randomindex)
         {
@@ -196,4 +224,6 @@ public class MixtureStat: MonoBehaviour
             Debug.Log($" - UseFound: {UseFound}");
         }
     }
+
+
 }
