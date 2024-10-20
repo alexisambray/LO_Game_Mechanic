@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Use this for UI elements like text and image
+using UnityEngine.UI;
+using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -12,13 +12,10 @@ public class InventoryManager : MonoBehaviour
     // Inventory slots
     public List<GameObject> itemSlots; // Assign these in the inspector (ItemSlot panels)
     public GameObject selectedItemImage; // Image to show the selected item
-    public Text selectedItemDescription; // Description text to show selected item
+    public TextMeshProUGUI selectedItemDescription; // Description text to show selected item
 
-    private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>();
-    private Dictionary<string, string> hiddenDescriptions = new Dictionary<string, string>();
-    private List<string> unlockedItems = new List<string>(); // List of unlocked items
+    private List<Item> itemsInInventory = new List<Item>(); // List of items in the inventory
 
-    // Start is called before the first frame update
     void Start()
     {
         Time.fixedDeltaTime = 0.02f; // Reduce the number of physics updates to optimize performance
@@ -28,25 +25,24 @@ public class InventoryManager : MonoBehaviour
         menuActivated = false;
         InventoryMenu.SetActive(false); // Start with inventory menu hidden
 
-        // Initialize hidden item descriptions (before DFA approval)
-        hiddenDescriptions.Add("Vinegar", "This item is pending DFA approval.");
-        hiddenDescriptions.Add("Blush", "This item is pending DFA approval.");
-        hiddenDescriptions.Add("Soap", "This item is pending DFA approval.");
-
-        // Initialize item descriptions (after DFA approval)
-        itemDescriptions.Add("Vinegar", "A homogeneous mixture used for cooking.");
-        itemDescriptions.Add("Blush", "A cosmetic product used to add color to the cheeks.");
-        itemDescriptions.Add("Soap", "A product used for cleaning and hygiene.");
-
-        // Assume item slots are already assigned in the Inspector, hide them initially
+        // Assume item slots are already assigned in the Inspector, populate them as hidden initially
         foreach (GameObject slot in itemSlots)
         {
-            // Initially, no items are unlocked
+            // Initially, all items are hidden
             slot.SetActive(false);
+        }
+
+        // Assign Item components to slots dynamically
+        foreach (GameObject slot in itemSlots)
+        {
+            Item itemComponent = slot.GetComponent<Item>();
+            if (itemComponent != null)
+            {
+                itemsInInventory.Add(itemComponent);
+            }
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Handle input for opening/closing the inventory menu
@@ -81,7 +77,6 @@ public class InventoryManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            // Check for interactions with UI or game objects
             GameObject clickedObject = hit.collider.gameObject;
             HandleItemInteraction(clickedObject);
         }
@@ -94,59 +89,48 @@ public class InventoryManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            // Handle interactions for mouse clicks
             GameObject clickedObject = hit.collider.gameObject;
             HandleItemInteraction(clickedObject);
         }
     }
 
-    // This method will handle item interactions, such as when a player selects or unlocks an item
     void HandleItemInteraction(GameObject clickedObject)
     {
-        // Assuming clickedObject is an inventory slot or an item in the game
-        if (unlockedItems.Contains(clickedObject.name))
+        // Check if clicked object is an item slot
+        Item clickedItem = clickedObject.GetComponent<Item>();
+        if (clickedItem != null)
         {
-            // If the item is unlocked, display its description and image
-            selectedItemImage.SetActive(true); // Show the selected item image
-            selectedItemDescription.text = itemDescriptions[clickedObject.name]; // Show the description
-        }
-        else if (hiddenDescriptions.ContainsKey(clickedObject.name))
-        {
-            // If the item is still locked, show the pending DFA approval message
-            selectedItemDescription.text = hiddenDescriptions[clickedObject.name];
-        }
-    }
-
-    // This method unlocks items after DFA approval and reveals them in the inventory
-    public void UnlockItem(string itemName)
-    {
-        if (!unlockedItems.Contains(itemName))
-        {
-            unlockedItems.Add(itemName); // Add item to the unlocked list
-
-            // Find the corresponding item slot in the UI and activate it
-            foreach (GameObject slot in itemSlots)
+            if (clickedItem.isUnlocked)
             {
-                if (slot.name == itemName)
-                {
-                    slot.SetActive(true); // Reveal the item slot in the UI
-                }
-            }
-        }
-    }
-
-    // This method updates the UI to reflect an unlocked item
-    public void UpdateInventoryUI()
-    {
-        foreach (GameObject slot in itemSlots)
-        {
-            if (unlockedItems.Contains(slot.name))
-            {
-                slot.SetActive(true);
+                // If the item is unlocked, display its description and image
+                selectedItemImage.GetComponent<Image>().sprite = clickedItem.itemImage;
+                selectedItemImage.SetActive(true); // Show the selected item image
+                selectedItemDescription.text = clickedItem.description; // Show the description
             }
             else
             {
-                slot.SetActive(false);
+                // If the item is still locked, show the pending DFA approval message
+                selectedItemDescription.text = clickedItem.hiddenDescription;
+            }
+        }
+    }
+
+    // Method to unlock items after DFA approval and reveal them in the inventory
+    public void UnlockItem(string itemName)
+    {
+        foreach (Item item in itemsInInventory)
+        {
+            if (item.itemName == itemName && !item.isUnlocked)
+            {
+                item.Unlock(); // Unlock the item
+                // Find the corresponding item slot in the UI and activate it
+                foreach (GameObject slot in itemSlots)
+                {
+                    if (slot.name == itemName)
+                    {
+                        slot.SetActive(true); // Reveal the item slot in the UI
+                    }
+                }
             }
         }
     }
