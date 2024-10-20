@@ -150,7 +150,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (item.name == itemName)
             {
-                return item.GetComponent<Item>().itemSprite; // Assuming Item script holds a reference to the sprite
+                //return item.GetComponent<Item>().itemSprite; // Assuming Item script holds a reference to the sprite
             }
         }
         return null;
