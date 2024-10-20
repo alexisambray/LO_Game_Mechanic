@@ -38,7 +38,7 @@ public class InventoryManager : MonoBehaviour
         itemDescriptions.Add("Blush", "A cosmetic product used to add color to the cheeks.");
         itemDescriptions.Add("Soap", "A product used for cleaning and hygiene.");
 
-        // Assume item slots are already assigned in the Inspector, populate them as hidden initially
+        // Assume item slots are already assigned in the Inspector, hide them initially
         foreach (GameObject slot in itemSlots)
         {
             // Initially, no items are unlocked
@@ -110,7 +110,7 @@ public class InventoryManager : MonoBehaviour
             selectedItemImage.SetActive(true); // Show the selected item image
             selectedItemDescription.text = itemDescriptions[clickedObject.name]; // Show the description
         }
-        else
+        else if (hiddenDescriptions.ContainsKey(clickedObject.name))
         {
             // If the item is still locked, show the pending DFA approval message
             selectedItemDescription.text = hiddenDescriptions[clickedObject.name];
@@ -131,6 +131,22 @@ public class InventoryManager : MonoBehaviour
                 {
                     slot.SetActive(true); // Reveal the item slot in the UI
                 }
+            }
+        }
+    }
+
+    // This method updates the UI to reflect an unlocked item
+    public void UpdateInventoryUI()
+    {
+        foreach (GameObject slot in itemSlots)
+        {
+            if (unlockedItems.Contains(slot.name))
+            {
+                slot.SetActive(true);
+            }
+            else
+            {
+                slot.SetActive(false);
             }
         }
     }
