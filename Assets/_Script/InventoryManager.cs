@@ -24,7 +24,7 @@ public class InventoryManager : MonoBehaviour
         Time.fixedDeltaTime = 0.02f; // Reduce the number of physics updates to optimize performance
 
         // Adjust grid size for larger touch targets on tablet screens
-        gridLayoutGroup.cellSize = new Vector2(200, 200); // Adjust size for tablet touch
+        gridLayoutGroup.cellSize = new Vector2(155, 160); // Adjust size for tablet touch
         menuActivated = false;
         InventoryMenu.SetActive(false); // Start with inventory menu hidden
 
