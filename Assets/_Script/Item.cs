@@ -1,17 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Item : MonoBehaviour
 {
-    public string itemName; // each item with unique name
-    public Sprite itemImage; 
-    public Sprite itemSprite; // sprite for the item
-    public bool isUnlocked = false;
-    public string description; // Description shown after unlocking
-    public string hiddenDescription = "This item is pending DFA approval."; // Initial hidden description
+    public string ItemName;
+    public Sprite ItemSprite;
+    public bool IsUnlocked { get; set; } = false; // Corrected capitalization
+    public string Description;
+    public string HiddenDescription;
 
-    // Method to unlock the item
-    public void Unlock()
+    private Image itemImage;
+
+    void Start()
     {
-        isUnlocked = true;
+        itemImage = GetComponent<Image>();
+        if (!IsUnlocked && itemImage != null)
+        {
+            itemImage.sprite = Resources.Load<Sprite>("Sprites/question_mark"); // Load your question mark sprite
+        }
+    }
+
+    public void UnlockItem()
+    {
+        IsUnlocked = true; // Set the item as unlocked
+        if (itemImage != null)
+        {
+            itemImage.sprite = ItemSprite; // Update the sprite to the actual item sprite
+            Color color = itemImage.color;
+            color.a = 1f; // Set alpha to fully visible
+            itemImage.color = color;
+        }
+        Debug.Log($"{ItemSprite} has been unlocked!");
     }
 }

@@ -1,18 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
-    // Start is called before the first frame update
+    public MixturePrefab mixturePrefab; // Reference to the associated MixturePrefab
+    public InventoryManager inventoryManager; // Reference to the InventoryManager
+    public Image itemImage; // Reference to the Image component for the item
+
     void Start()
     {
-        
+        // Set the initial sprite to the question mark image
+        itemImage.sprite = Resources.Load<Sprite>("Sprites/question_mark");
+        Color color = itemImage.color;
+        color.a = 0f; // Start hidden
+        itemImage.color = color;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        
+        Debug.Log("Item Slot clicked: " + gameObject.name);
+        if (mixturePrefab != null)
+        {
+            if (!mixturePrefab.IsUnlocked) // Ensure the item isn't already unlocked
+            {
+                mixturePrefab.UnlockItem(); // Unlock the item
+                inventoryManager.HandleItemInteraction(gameObject); // Update inventory UI
+            }
+            else
+            {
+                Debug.Log("Item already unlocked."); // Debugging log
+            }
+        }
+        else
+        {
+            Debug.LogError("MixturePrefab reference is missing.");
+        }
     }
 }
