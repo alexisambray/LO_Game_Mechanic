@@ -6,33 +6,34 @@ using TMPro;
 
 public class Item : MonoBehaviour
 {
-    public string ItemName;
-    public Sprite ItemSprite;
-    public bool IsUnlocked { get; set; } = false; // Corrected capitalization
-    public string Description;
-    public string HiddenDescription;
+    public string itemName; // Changed to camelCase
+    public Sprite itemSprite; // Changed to camelCase
+    public bool isUnlocked { get; private set; } = false; // Changed to camelCase
+    public string description; // Changed to camelCase
+    public string hiddenDescription; // Changed to camelCase
 
     private Image itemImage;
 
     void Start()
     {
         itemImage = GetComponent<Image>();
-        if (!IsUnlocked && itemImage != null)
+        if (!isUnlocked && itemImage != null)
         {
-            itemImage.sprite = Resources.Load<Sprite>("Sprites/question_mark"); // Load your question mark sprite
+            itemImage.sprite = Resources.Load<Sprite>("Sprites/question_mark");
         }
     }
 
     public void UnlockItem()
     {
-        IsUnlocked = true; // Set the item as unlocked
+        isUnlocked = true; // Use the camelCase variable
         if (itemImage != null)
         {
-            itemImage.sprite = ItemSprite; // Update the sprite to the actual item sprite
+            itemImage.sprite = itemSprite;
             Color color = itemImage.color;
-            color.a = 1f; // Set alpha to fully visible
+            color.a = 1f;
             itemImage.color = color;
         }
-        Debug.Log($"{ItemSprite} has been unlocked!");
+        Debug.Log($"{itemName} has been unlocked!");
     }
 }
+

@@ -12,10 +12,9 @@ public class InventoryManager : MonoBehaviour
     // Inventory slots
     public List<GameObject> itemSlots; // Assign these in the inspector (ItemSlot panels)
     public GameObject selectedItemImage; // Image to show the selected item
-    public TextMeshProUGUI selectedItemDescription; // Description text to show selected item
+    public TextMeshProUGUI selectedItemDescriptionText; // Description text to show selected item
     public GameObject inventoryMenu; // Inventory canvas panel to be toggled
     public TextMeshProUGUI selectedItemNameText;
-    public TextMeshProUGUI selectedItemDescriptionText;
 
     private void Awake()
     {
@@ -55,16 +54,16 @@ public class InventoryManager : MonoBehaviour
 
         if (clickedObject != null)
         {
-            // Get the Image component from the clicked object to update its sprite
             Image slotImage = clickedObject.GetComponent<Image>();
             Item item = clickedObject.GetComponent<Item>();
 
             if (slotImage != null && item != null)
             {
-                item.IsUnlocked = true; // Set the item as unlocked
+                item.UnlockItem(); // Call the UnlockItem method to handle unlocking logic
+
+                // Update the slot image
                 slotImage.sprite = itemSprite;
 
-                // Hide the question mark image and show the actual item image
                 Transform questionMarkTransform = clickedObject.transform.Find("QuestionMarkImage");
                 if (questionMarkTransform != null)
                 {
@@ -76,22 +75,53 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+
     public void HandleItemInteraction(GameObject clickedObject)
     {
+        Debug.Log($"Clicked object: {clickedObject.name}");
+
+        // Ensure clickedObject has a MixturePrefab component
         MixturePrefab mixturePrefab = clickedObject.GetComponent<MixturePrefab>();
 
-        if (mixturePrefab != null && mixturePrefab.IsUnlocked)
+        // If the clicked object is an ItemSlot, access its MixturePrefab
+        if (mixturePrefab == null)
         {
-            selectedItemImage.SetActive(true);
-            selectedItemImage.GetComponent<Image>().sprite = mixturePrefab.itemSprite; // Update item image
-            selectedItemNameText.text = mixturePrefab.itemName; // Update item name
-            selectedItemDescriptionText.text = mixturePrefab.Description; // Update item description
-            Debug.Log($"Selected item: {mixturePrefab.itemName}");
+            // Try getting MixturePrefab from the child GameObject if necessary
+            mixturePrefab = clickedObject.GetComponentInChildren<MixturePrefab>();
+        }
+
+        if (mixturePrefab != null)
+        {
+            Debug.Log($"MixturePrefab found: {mixturePrefab.itemName}, IsUnlocked: {mixturePrefab.isUnlocked}");
+
+            if (mixturePrefab.isUnlocked) // Check if unlocked
+            {
+                selectedItemImage.SetActive(true);
+                selectedItemImage.GetComponent<Image>().sprite = mixturePrefab.itemSprite; // Update item sprite
+
+                // Check for null references here
+                if (selectedItemNameText != null)
+                    selectedItemNameText.text = mixturePrefab.itemName; // Update item name text
+                else
+                    Debug.LogError("selectedItemNameText is null");
+
+                if (selectedItemDescriptionText != null)
+                    selectedItemDescriptionText.text = mixturePrefab.description; // Update item description
+                else
+                    Debug.LogError("selectedItemDescriptionText is null");
+
+                Debug.Log($"Selected item: {mixturePrefab.itemName}");
+            }
+            else
+            {
+                Debug.LogError("Item is not unlocked.");
+            }
         }
         else
         {
-            Debug.LogError("Item is not unlocked or mixturePrefab is missing.");
+            Debug.LogError("MixturePrefab is missing.");
         }
+        Debug.Log($"Item Sprite: {mixturePrefab?.itemSprite}, Item Name: {mixturePrefab?.itemName}, Description: {mixturePrefab?.description}");
     }
 
 

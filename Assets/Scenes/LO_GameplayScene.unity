@@ -3494,10 +3494,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Liquid Soap
-  ItemSprite: {fileID: 21300000, guid: 2390cc7c5f4ca2746a39ad0c09d88d10, type: 3}
-  Description: 'Liquid Soap is a homogeneous mixture used for personal hygiene. '
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &678169175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3526,6 +3526,7 @@ MonoBehaviour:
   itemName: Liquid Soap
   itemSprite: {fileID: 21300000, guid: 2390cc7c5f4ca2746a39ad0c09d88d10, type: 3}
   itemImage: {fileID: 1209557406}
+  description: 'Liquid Soap is a homogeneous mixture used for personal hygiene. '
 --- !u!1001 &701947722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4413,10 +4414,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Vinegar
-  ItemSprite: {fileID: 21300000, guid: f7aae7946d3ac8b4abaafbefaf17009c, type: 3}
-  Description: Vinegar is a homogeneous mixture used for food/beverage.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &841723715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4445,6 +4446,7 @@ MonoBehaviour:
   itemName: Vinegar
   itemSprite: {fileID: 21300000, guid: f7aae7946d3ac8b4abaafbefaf17009c, type: 3}
   itemImage: {fileID: 335847042}
+  description: Vinegar is a homogeneous mixture used for food/beverage.
 --- !u!1 &863143282
 GameObject:
   m_ObjectHideFlags: 0
@@ -4898,10 +4900,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Lysol
-  ItemSprite: {fileID: 21300000, guid: 04908c5f0b881ee408b64da6b2d073d4, type: 3}
-  Description: Lysol is a homogeneous mixture used for health cleaning purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &958537240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4930,6 +4932,7 @@ MonoBehaviour:
   itemName: Lysol
   itemSprite: {fileID: 21300000, guid: 04908c5f0b881ee408b64da6b2d073d4, type: 3}
   itemImage: {fileID: 2075167785}
+  description: Lysol is a homogeneous mixture used for health cleaning purposes.
 --- !u!1 &1027289844
 GameObject:
   m_ObjectHideFlags: 0
@@ -5689,10 +5692,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Mascara
-  ItemSprite: {fileID: 21300000, guid: 738d71d26b733c540b521785f56c00d3, type: 3}
-  Description: Mascara is heterogeneous mixture used for cosmetics.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1083351508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5721,6 +5724,7 @@ MonoBehaviour:
   itemName: Mascara
   itemSprite: {fileID: 21300000, guid: 738d71d26b733c540b521785f56c00d3, type: 3}
   itemImage: {fileID: 1065262114}
+  description: Mascara is heterogeneous mixture used for cosmetics.
 --- !u!1001 &1118206632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5853,10 +5857,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Sunblock
-  ItemSprite: {fileID: 21300000, guid: 5c80c1db869fd8c44b0b82c1ceb94760, type: 3}
-  Description: Sunblock is a homogeneous mixture used for personal hygiene purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1119047666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5885,6 +5889,7 @@ MonoBehaviour:
   itemName: Sunblock
   itemSprite: {fileID: 21300000, guid: 5c80c1db869fd8c44b0b82c1ceb94760, type: 3}
   itemImage: {fileID: 475808956}
+  description: Sunblock is a homogeneous mixture used for personal hygiene purposes.
 --- !u!1001 &1137082131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6030,11 +6035,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Soil Conditioner
-  ItemSprite: {fileID: 21300000, guid: 871d74db36e9a754c9569da6c3ca9542, type: 3}
-  Description: Soil Conditioner is a heterogeneous mixture used for agricultural
-    purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1137082139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6050,6 +6054,8 @@ MonoBehaviour:
   itemName: Soil Comditioner
   itemSprite: {fileID: 21300000, guid: 871d74db36e9a754c9569da6c3ca9542, type: 3}
   itemImage: {fileID: 617448136}
+  description: Soil Conditioner is a heterogeneous mixture used for agricultural
+    purposes.
 --- !u!1 &1149478457
 GameObject:
   m_ObjectHideFlags: 0
@@ -6918,10 +6924,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Pesticide
-  ItemSprite: {fileID: 21300000, guid: cb9063bd48651f146913ec144164387a, type: 3}
-  Description: Pesticide is a heterogeneous mixture used for agricultural purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1350799598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6950,6 +6956,7 @@ MonoBehaviour:
   itemName: Pesticide
   itemSprite: {fileID: 21300000, guid: cb9063bd48651f146913ec144164387a, type: 3}
   itemImage: {fileID: 745613569}
+  description: Pesticide is a heterogeneous mixture used for agricultural purposes.
 --- !u!1 &1353746173
 GameObject:
   m_ObjectHideFlags: 0
@@ -7690,14 +7697,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
-  m_fontSizeBase: 38
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -7707,8 +7714,8 @@ MonoBehaviour:
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_wordWrappingRatios: 0.174
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -7756,7 +7763,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -15}
+  m_AnchoredPosition: {x: 11, y: -16}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1545711861
@@ -8094,10 +8101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Lipgloss
-  ItemSprite: {fileID: 21300000, guid: c3766edda37a25242bd27713b9a0658b, type: 3}
-  Description: Lipgloss is a homogeneous mixture used for cosmetics.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1574721336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8126,6 +8133,7 @@ MonoBehaviour:
   itemName: Lipgloss
   itemSprite: {fileID: 21300000, guid: c3766edda37a25242bd27713b9a0658b, type: 3}
   itemImage: {fileID: 1876399771}
+  description: Lipgloss is a homogeneous mixture used for cosmetics.
 --- !u!1 &1582406369
 GameObject:
   m_ObjectHideFlags: 0
@@ -9181,11 +9189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Joy Dishwashing Liquid
-  ItemSprite: {fileID: 21300000, guid: b1683a09bd26be04689dab4a13b5db1b, type: 3}
-  Description: Joy dishwashing liquid is a homogeneous mixture used for health cleaning
-    purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1721333724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9214,6 +9221,8 @@ MonoBehaviour:
   itemName: Joy Dishwashing Liquid
   itemSprite: {fileID: 21300000, guid: b1683a09bd26be04689dab4a13b5db1b, type: 3}
   itemImage: {fileID: 1804141008}
+  description: Joy dishwashing liquid is a homogeneous mixture used for health cleaning
+    purposes.
 --- !u!1 &1744722397 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3413790612279774260, guid: 3511f3bb81707c249847f19c98d4e8c5, type: 3}
@@ -9231,10 +9240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Halo-halo
-  ItemSprite: {fileID: 21300000, guid: a0322ffe40f08aa489e78f77db0d015e, type: 3}
-  Description: Halo-halo is a heterogeneous mixture used for food/beverage.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1744722406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9263,6 +9272,7 @@ MonoBehaviour:
   itemName: Halo-halo
   itemSprite: {fileID: 21300000, guid: a0322ffe40f08aa489e78f77db0d015e, type: 3}
   itemImage: {fileID: 284812264}
+  description: Halo-halo is a heterogeneous mixture used for food/beverage.
 --- !u!1 &1794253584 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3413790612279774260, guid: 3511f3bb81707c249847f19c98d4e8c5, type: 3}
@@ -9280,10 +9290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Paracetamol
-  ItemSprite: {fileID: 21300000, guid: 3e3da4de5e7cf8940ab4625aca1e5b68, type: 3}
-  Description: Paracetamol syrup is a homogeneous mixture used for medical purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1794253592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9312,6 +9322,7 @@ MonoBehaviour:
   itemName: Paracetamol
   itemSprite: {fileID: 21300000, guid: 3e3da4de5e7cf8940ab4625aca1e5b68, type: 3}
   itemImage: {fileID: 199140954}
+  description: Paracetamol syrup is a homogeneous mixture used for medical purposes.
 --- !u!1 &1804141006
 GameObject:
   m_ObjectHideFlags: 0
@@ -9589,10 +9600,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Robitussin
-  ItemSprite: {fileID: 21300000, guid: 0f7cb1dc1c9c9374c9b84ee7634ec618, type: 3}
-  Description: Robitussin is a homogeneous mixture used for medical purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1830722219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9621,6 +9632,7 @@ MonoBehaviour:
   itemName: Robitussin
   itemSprite: {fileID: 21300000, guid: 0f7cb1dc1c9c9374c9b84ee7634ec618, type: 3}
   itemImage: {fileID: 431330479}
+  description: Robitussin is a homogeneous mixture used for medical purposes.
 --- !u!1 &1838981139
 GameObject:
   m_ObjectHideFlags: 0
@@ -9834,11 +9846,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Laundry Detergent
-  ItemSprite: {fileID: 21300000, guid: e5dbd78ff00f73c44b0d9049c4edfa39, type: 3}
-  Description: Laundry detergent is a homogeneous mixture used for health cleaning
-    purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1848137888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9867,6 +9878,8 @@ MonoBehaviour:
   itemName: Laundry Detergent
   itemSprite: {fileID: 21300000, guid: e5dbd78ff00f73c44b0d9049c4edfa39, type: 3}
   itemImage: {fileID: 1353746175}
+  description: Laundry detergent is a homogeneous mixture used for health cleaning
+    purposes.
 --- !u!1 &1850162244 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3413790612279774260, guid: 3511f3bb81707c249847f19c98d4e8c5, type: 3}
@@ -9884,10 +9897,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Mouthwash
-  ItemSprite: {fileID: 21300000, guid: 2050b96482902d7478460b89cc2eaadd, type: 3}
-  Description: 'Mouthwash is a homogeneous mixture used for personal hygiene. '
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1850162253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9916,6 +9929,7 @@ MonoBehaviour:
   itemName: Mouthwash
   itemSprite: {fileID: 21300000, guid: 2050b96482902d7478460b89cc2eaadd, type: 3}
   itemImage: {fileID: 2002718820}
+  description: 'Mouthwash is a homogeneous mixture used for personal hygiene. '
 --- !u!1 &1869001864
 GameObject:
   m_ObjectHideFlags: 0
@@ -9981,15 +9995,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29
-  m_fontSizeBase: 29
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -10047,7 +10061,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -140, y: -75.45007}
+  m_AnchoredPosition: {x: 0.0000038147, y: -114}
   m_SizeDelta: {x: 209.2166, y: 51.8431}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1871353116
@@ -10275,11 +10289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Liquid Fertilizer
-  ItemSprite: {fileID: 21300000, guid: 38c50d90ae3dc9d47a58e440c055c227, type: 3}
-  Description: Liquid fertilizer is a heterogeneous mixture used for agricultural
-    purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1902326943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10308,6 +10321,8 @@ MonoBehaviour:
   itemName: Liquid Fertilizer
   itemSprite: {fileID: 21300000, guid: 38c50d90ae3dc9d47a58e440c055c227, type: 3}
   itemImage: {fileID: 764790623}
+  description: Liquid fertilizer is a heterogeneous mixture used for agricultural
+    purposes.
 --- !u!1 &1916309290
 GameObject:
   m_ObjectHideFlags: 0
@@ -10443,10 +10458,9 @@ MonoBehaviour:
   - {fileID: 57445535}
   - {fileID: 1149478457}
   selectedItemImage: {fileID: 1827940913}
-  selectedItemDescription: {fileID: 1869001865}
+  selectedItemDescriptionText: {fileID: 1869001865}
   inventoryMenu: {fileID: 2080975064}
   selectedItemNameText: {fileID: 1542872114}
-  selectedItemDescriptionText: {fileID: 1869001865}
 --- !u!1 &1921684470 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3413790612279774260, guid: 3511f3bb81707c249847f19c98d4e8c5, type: 3}
@@ -10464,10 +10478,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Dextrose
-  ItemSprite: {fileID: 21300000, guid: 8bf3b20411a8c614c87e9f6ba5e76aca, type: 3}
-  Description: Dextrose is a homogeneous mixture used for medical purposes.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &1921684479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10496,6 +10510,7 @@ MonoBehaviour:
   itemName: Dextrose
   itemSprite: {fileID: 21300000, guid: 8bf3b20411a8c614c87e9f6ba5e76aca, type: 3}
   itemImage: {fileID: 421097258}
+  description: Dextrose is a homogeneous mixture used for medical purposes.
 --- !u!1 &1951366648
 GameObject:
   m_ObjectHideFlags: 0
@@ -11129,10 +11144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Liquid Foundation
-  ItemSprite: {fileID: 21300000, guid: a1a906fbd4fc90b45a56199b4a76c289, type: 3}
-  Description: Liquid Foundation is a homogeneous mixture used for cosmetics.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &2078097411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11161,6 +11176,7 @@ MonoBehaviour:
   itemName: 'Liquid Foundation '
   itemSprite: {fileID: 21300000, guid: a1a906fbd4fc90b45a56199b4a76c289, type: 3}
   itemImage: {fileID: 1519683675}
+  description: Liquid Foundation is a homogeneous mixture used for cosmetics.
 --- !u!1 &2079705233
 GameObject:
   m_ObjectHideFlags: 0
@@ -11415,10 +11431,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Coffee
-  ItemSprite: {fileID: 21300000, guid: 1527a344368d44a44a528ebfed0524e8, type: 3}
-  Description: Coffee is a homogeneous mixture used for food/beverage.
-  HiddenDescription: This item is pending DFA approval.
+  itemName: 
+  itemSprite: {fileID: 0}
+  description: 
+  hiddenDescription: 
 --- !u!114 &2093214598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11447,6 +11463,7 @@ MonoBehaviour:
   itemName: Coffee
   itemSprite: {fileID: 21300000, guid: 1527a344368d44a44a528ebfed0524e8, type: 3}
   itemImage: {fileID: 754130169}
+  description: Coffee is a homogeneous mixture used for food/beverage.
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -6,21 +6,23 @@ public class MixturePrefab : MonoBehaviour
     public string itemName; // Item name
     public Sprite itemSprite; // Sprite to show when unlocked
     public Image itemImage;
-    public string Description { get; set; }
+    public string description; // Keep this as the description field
 
-    public bool IsUnlocked { get; private set; } = false; // Unlock status
+    public bool isUnlocked { get; private set; } = false; // Unlock status
 
     public void UnlockItem()
     {
-        IsUnlocked = true; // Set the item as unlocked
-        Debug.Log($"{itemName} is being unlocked.");
+        isUnlocked = true; // Set the item as unlocked
+
         if (itemImage != null)
         {
-            itemImage.sprite = itemSprite; // Update the sprite to the actual item sprite
-            Color color = itemImage.color; // Get current color
-            color.a = 1f; // Set alpha to 1 (fully visible)
-            itemImage.color = color; // Update the color
+            itemImage.sprite = itemSprite; // Update the sprite to show the actual item
+            Color color = itemImage.color;
+            color.a = 1f; // Set alpha to 1 to make it visible
+            itemImage.color = color;
         }
+
         Debug.Log($"{itemName} has been unlocked!");
+        Debug.Log($"Unlocking Item - Name: {itemName}, Sprite: {itemSprite}, Description: {description}");
     }
 }

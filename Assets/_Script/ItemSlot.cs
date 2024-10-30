@@ -22,14 +22,14 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         Debug.Log("Item Slot clicked: " + gameObject.name);
         if (mixturePrefab != null)
         {
-            if (!mixturePrefab.IsUnlocked) // Ensure the item isn't already unlocked
+            if (!mixturePrefab.isUnlocked) // Check if already unlocked
             {
                 mixturePrefab.UnlockItem(); // Unlock the item
                 inventoryManager.HandleItemInteraction(gameObject); // Update inventory UI
             }
             else
             {
-                Debug.Log("Item already unlocked."); // Debugging log
+                Debug.Log("Item already unlocked.");
             }
         }
         else
