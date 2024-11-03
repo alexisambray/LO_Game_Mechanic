@@ -17,15 +17,10 @@ public class Item : MonoBehaviour
 
     void Awake()
     {
-        // Get the MixtureStat component from the associated Mixture
-        Mixture mixture = GetComponent<Mixture>(); // Assuming this Item is part of a Mixture
+        Mixture mixture = GetComponent<Mixture>();
         if (mixture != null)
         {
-            mixtureStat = mixture.mixtureStat;
-        }
-        else
-        {
-            Debug.LogError("Mixture component not found!");
+            mixtureStat = mixture.mixtureStat; // Ensure you reference the MixtureStat instance
         }
     }
 
@@ -40,12 +35,12 @@ public class Item : MonoBehaviour
 
     public void UnlockItem()
     {
-        isUnlocked = true; // Use the camelCase variable
+        isUnlocked = true; // Set unlock status
         if (itemImage != null)
         {
             itemImage.sprite = itemSprite;
             Color color = itemImage.color;
-            color.a = 1f;
+            color.a = 1f; // Make visible
             itemImage.color = color;
         }
         Debug.Log($"{itemName} has been unlocked!");
@@ -55,7 +50,7 @@ public class Item : MonoBehaviour
     {
         bool isVisible = isUnlocked && mixtureStat != null && mixtureStat.ItemFound;
         Debug.Log($"IsVisible called for {itemName}: isUnlocked={isUnlocked}, mixtureStat={mixtureStat != null}, ItemFound={mixtureStat?.ItemFound}");
-        // Check if item is unlocked and if the MixtureStat's ItemFound is true
-        return isUnlocked && mixtureStat != null && mixtureStat.ItemFound;
+        // Return true if item is unlocked and found
+        return isVisible;
     }
 }

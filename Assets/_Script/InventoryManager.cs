@@ -133,10 +133,12 @@ public class InventoryManager : MonoBehaviour
             if (item != null && item.IsVisible())
             {
                 slot.SetActive(true);
+                Debug.Log($"Slot for {item.itemName} is visible.");
             }
             else
             {
                 slot.SetActive(false);
+                Debug.Log($"Slot for {item.itemName ?? "unknown item"} is hidden.");
             }
         }
     }
