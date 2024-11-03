@@ -22,19 +22,24 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         Debug.Log("Item Slot clicked: " + gameObject.name);
         if (mixturePrefab != null)
         {
-            if (!mixturePrefab.isUnlocked) // Check if already unlocked
+            Item item = mixturePrefab.GetComponent<Item>();
+
+            if (item != null && item.IsVisible())// Check if the item is visible
             {
-                mixturePrefab.UnlockItem(); // Unlock the item
-                inventoryManager.HandleItemInteraction(gameObject); // Update inventory UI
+                if (!mixturePrefab.isUnlocked)
+                {
+                    mixturePrefab.UnlockItem(); // Unlock the item
+                    inventoryManager.HandleItemInteraction(gameObject); // Update inventory UI
+                }
+                else
+                {
+                    Debug.Log("Item already unlocked.");
+                }
             }
             else
             {
-                Debug.Log("Item already unlocked.");
+                Debug.LogError("Item is not visible or MixturePrefab reference is missing.");
             }
-        }
-        else
-        {
-            Debug.LogError("MixturePrefab reference is missing.");
         }
     }
 }

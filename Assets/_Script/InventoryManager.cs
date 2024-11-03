@@ -124,6 +124,22 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"Item Sprite: {mixturePrefab?.itemSprite}, Item Name: {mixturePrefab?.itemName}, Description: {mixturePrefab?.description}");
     }
 
+    public void PopulateInventory()
+    {
+        foreach(var slot in itemSlots)
+        {
+            Item item = slot.GetComponent<Item>();
+
+            if (item != null && item.IsVisible())
+            {
+                slot.SetActive(true);
+            }
+            else
+            {
+                slot.SetActive(false);
+            }
+        }
+    }
 
 
 }

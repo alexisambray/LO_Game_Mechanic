@@ -13,6 +13,21 @@ public class Item : MonoBehaviour
     public string hiddenDescription; // Changed to camelCase
 
     private Image itemImage;
+    private MixtureStat mixtureStat; // Reference to the MixtureStat
+
+    void Awake()
+    {
+        // Get the MixtureStat component from the associated Mixture
+        Mixture mixture = GetComponent<Mixture>(); // Assuming this Item is part of a Mixture
+        if (mixture != null)
+        {
+            mixtureStat = mixture.mixtureStat;
+        }
+        else
+        {
+            Debug.LogError("Mixture component not found!");
+        }
+    }
 
     void Start()
     {
@@ -35,5 +50,10 @@ public class Item : MonoBehaviour
         }
         Debug.Log($"{itemName} has been unlocked!");
     }
-}
 
+    public bool IsVisible()
+    {
+        // Check if item is unlocked and if the MixtureStat's ItemFound is true
+        return isUnlocked && mixtureStat != null && mixtureStat.ItemFound;
+    }
+}
