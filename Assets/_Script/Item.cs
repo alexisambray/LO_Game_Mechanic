@@ -53,6 +53,8 @@ public class Item : MonoBehaviour
 
     public bool IsVisible()
     {
+        bool isVisible = isUnlocked && mixtureStat != null && mixtureStat.ItemFound;
+        Debug.Log($"IsVisible called for {itemName}: isUnlocked={isUnlocked}, mixtureStat={mixtureStat != null}, ItemFound={mixtureStat?.ItemFound}");
         // Check if item is unlocked and if the MixtureStat's ItemFound is true
         return isUnlocked && mixtureStat != null && mixtureStat.ItemFound;
     }
