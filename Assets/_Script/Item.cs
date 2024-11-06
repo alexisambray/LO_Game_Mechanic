@@ -13,6 +13,16 @@ public class Item : MonoBehaviour
     public string hiddenDescription; // Changed to camelCase
 
     private Image itemImage;
+    private MixtureStat mixtureStat; // Reference to the MixtureStat
+
+    void Awake()
+    {
+        Mixture mixture = GetComponent<Mixture>();
+        if (mixture != null)
+        {
+            mixtureStat = mixture.mixtureStat; // Ensure you reference the MixtureStat instance
+        }
+    }
 
     void Start()
     {
@@ -25,15 +35,22 @@ public class Item : MonoBehaviour
 
     public void UnlockItem()
     {
-        isUnlocked = true; // Use the camelCase variable
+        isUnlocked = true; // Set unlock status
         if (itemImage != null)
         {
             itemImage.sprite = itemSprite;
             Color color = itemImage.color;
-            color.a = 1f;
+            color.a = 1f; // Make visible
             itemImage.color = color;
         }
         Debug.Log($"{itemName} has been unlocked!");
     }
-}
 
+    public bool IsVisible()
+    {
+        bool isVisible = isUnlocked && mixtureStat != null && mixtureStat.ItemFound;
+        Debug.Log($"IsVisible called for {itemName}: isUnlocked={isUnlocked}, mixtureStat={mixtureStat != null}, ItemFound={mixtureStat?.ItemFound}");
+        // Return true if item is unlocked and found
+        return isVisible;
+    }
+}
