@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mixture
   - Tool
+  - Inventory
   layers:
   - Default
   - TransparentFX

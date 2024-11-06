@@ -35,16 +35,13 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void Update()
+
+    public void ToggleInventoryVisibility()
     {
-        // Listen for the "i" key to toggle inventory visibility
-        if (Input.GetKeyDown(KeyCode.I))
+        if (inventoryMenu != null)
         {
-            if (inventoryMenu != null)
-            {
-                inventoryMenu.SetActive(!inventoryMenu.activeSelf);
-                Debug.Log($"Inventory Menu set to: {inventoryMenu.activeSelf}");
-            }
+            inventoryMenu.SetActive(!inventoryMenu.activeSelf);
+            Debug.Log($"Inventory Menu set to: {inventoryMenu.activeSelf}");
         }
     }
 

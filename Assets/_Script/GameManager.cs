@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static MixtureStat;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject mixturePrefab;
     public int numOfMixtures = 3;
+    //public int maxMixture = 3;
     public Transform mixtureSlotPanel;
     private List<GameObject> instantiatedMixtures = new List<GameObject>();
     public int numOfMixturesCreated = 0;
@@ -22,6 +24,14 @@ public class GameManager : MonoBehaviour
 
     // New Variables for Inventory Control
     public GameObject inventoryCanvas; // Reference to the Inventory Canvas
+
+    //day counter
+    private int dayCount;
+    public Text dayText;
+    public Button nextDayButton;
+
+    //UI Effect
+    public Material outlineMaterial;
 
     public static GameManager Instance
     {
@@ -50,6 +60,10 @@ public class GameManager : MonoBehaviour
         shelfComplete = false;
         selectedObject = null;
 
+        dayCount = 0;
+        StartNewDay();
+
+
         // Ensure the inventory canvas is inactive at the start
         if (inventoryCanvas != null)
         {
@@ -60,36 +74,54 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Inventory canvas reference not set in the inspector.");
         }
 
-        InstantiateRandomMixture();
+        // Add listener for button click
+        if (nextDayButton != null)
+        {
+            nextDayButton.onClick.AddListener(OnNextDayButtonClicked);
+        }
+        else
+        {
+            Debug.LogWarning("Next Day Button is not assigned in the Inspector.");
+        }
+
+        SceneManager.LoadScene("LO_GameplayScene", LoadSceneMode.Additive);
     }
 
     private void Update()
     {
         HandleInteraction();
 
-        // Toggle inventory visibility with the "i" key
-        if (Input.GetKeyDown(KeyCode.I))
+        //Image image;
+        for (int i = 0; i < instantiatedMixtures.Count; i++)
         {
-            if (inventoryCanvas != null)
+           Image image = instantiatedMixtures[i].GetComponent<Image>();
+            if (image != null)
             {
-                inventoryCanvas.SetActive(!inventoryCanvas.activeSelf);
-                Debug.Log($"Inventory Canvas set to: {inventoryCanvas.activeSelf}");
+                image.material = null;
             }
+        }
+  
+        if (selectedObject != null)
+        {
+            Image selectedImage = selectedObject.GetComponent<Image>();
+            selectedImage.material = outlineMaterial;
         }
     }
 
-
     public void InstantiateRandomMixture()
     {
-        for (int i = 0; i < numOfMixtures; i++)
+        int currentMixtureCount = mixtureSlotPanel.childCount;
+        int mixturesToCreate = Mathf.Max(0, numOfMixtures - currentMixtureCount);
+
+        for (int i = 0; i < mixturesToCreate; i++)
         {
             GameObject newMixture = Instantiate(mixturePrefab, mixtureSlotPanel);
             newMixture.transform.localScale = Vector3.one;
             newMixture.name = "Mixture_" + numOfMixturesCreated;
 
             numOfMixturesCreated++;
-
             instantiatedMixtures.Add(newMixture);
+
         }
     }
 
@@ -143,10 +175,19 @@ public class GameManager : MonoBehaviour
 
                         if (selectedTool != null)
                         {
-                            if (selectedObject != null)
+                            if (selectedObject != null && selectedTool.name != "Centrifuge")
                             {
                                 ApplyToolEffect(selectedTool);
                                 selectedObject = null;
+                            }
+                            else if( selectedTool != null && selectedTool.name == "Centrifuge")
+                            {
+                                ApplyToolEffect(selectedTool);
+                                selectedTool.AddMixture(selectedObject);
+                                instantiatedMixtures.Remove(selectedObject);
+                               // Destroy(selectedObject);
+                                selectedObject = null;
+
                             }
                             else
                             {
@@ -158,6 +199,21 @@ public class GameManager : MonoBehaviour
                             Debug.LogWarning("Hit object does not have a Tool component.");
                         }
                         break; // Stop checking after finding the first tool
+                    }
+                    else if (hitObject.CompareTag("Inventory"))
+                    {
+                        InventoryManager.Instance.ToggleInventoryVisibility();
+
+                        Scene currentScene = SceneManager.GetActiveScene();
+                        if (currentScene.name == "LO_GameMechanic")
+                        {
+                            SwitchScene("LO_GameplayScene");
+                        }
+                        else if (currentScene.name == "LO_GameplayScene")
+                        {
+                            SwitchScene("LO_GameMechanic");
+                        }
+                        break; // Exit the loop after handling the inventory
                     }
                 }
             }
@@ -178,5 +234,40 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("No object selected to apply the tool effect.");
         }
+    }
+
+    public void StartNewDay()
+    {
+        dayCount++;
+        Debug.Log("Day " + dayCount + " has started!");
+
+        UpdateDateText();
+        InstantiateRandomMixture();
+    }
+
+    public void UpdateDateText()
+    {
+        if (dayText != null)
+        {
+            dayText.text = "Day: " + dayCount;
+        }
+    }
+
+    public void OnNextDayButtonClicked()
+    {
+        StartNewDay();
+    }
+
+    public int GetCurrentDay()
+    {
+        return dayCount;
+    }
+
+    public void SwitchScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+
+        //Scene currentScene = SceneManager.GetActiveScene();
+        //SceneManager.UnloadSceneAsync(currentScene);
     }
 }

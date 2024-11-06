@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MixtureStat : MonoBehaviour
 {
@@ -22,9 +23,12 @@ public class MixtureStat : MonoBehaviour
     public bool Agriculture { get; set; }
 
     public int ManualIndex = -1;
+    public Text feedbackText;
 
     private void Awake()
     {
+        feedbackText = GameObject.Find("FeedbackText").GetComponent<Text>();
+
         InitializeDefaultValues();
         InitializeStat();
 
@@ -98,7 +102,68 @@ public class MixtureStat : MonoBehaviour
                 TrueSolution = true;
                 Cosmetic = true;
                 break;
-            // Add other cases as needed
+            case 3:
+                TrueSolution = true;
+                Cleaning = true;
+                break;
+            case 4:
+                TrueSolution = true;
+                Hygiene = true;
+                break;
+            case 5:
+                TrueSolution = true;
+                Agriculture = true;
+                break;
+            //Suspension
+            case 6:
+                Suspension = true;
+                FoodAndBeverage = true;
+                break;
+            case 7:
+                Suspension = true;
+                Medicine = true;
+                break;
+            case 8:
+                Suspension = true;
+                Cosmetic = true;
+                break;
+            case 9:
+                Suspension = true;
+                Cleaning = true;
+                break;
+            case 10:
+                Suspension = true;
+                Hygiene = true;
+                break;
+            case 11:
+                Suspension = true;
+                Agriculture = true;
+                break;
+            //Colloids
+            case 12:
+                Colloid = true;
+                FoodAndBeverage = true;
+                break;
+            case 13:
+                Colloid = true;
+                Medicine = true;
+                break;
+            case 14:
+                Colloid = true;
+                Cosmetic = true;
+                break;
+            case 15:
+                Colloid = true;
+                Cleaning = true;
+                break;
+            case 16:
+                Colloid = true;
+                Hygiene = true;
+                break;
+            case 17:
+                Colloid = true;
+                Agriculture = true;
+                break;
             default:
                 Debug.LogError("Random index out of range");
                 break;
@@ -121,14 +186,48 @@ public class MixtureStat : MonoBehaviour
         {
             SharedStats stats = sharedStatsDict[mixtureKey];
             // Appearance
-            if (toolName == "Flashlight" && Colloid == true)
-            {
-                stats.AppearanceFound = true;
-                Debug.Log($"Updated AppearanceFound to true for mixtureKey: {mixtureKey}");
-            }
+            if (toolName == "Flashlight" && Colloid == true) { stats.AppearanceFound = true; }
+            else if (toolName == "Centrifuge" && (Suspension == true || TrueSolution == true)) { stats.AppearanceFound = true; }
+            else if (toolName == "Observe" && Suspension == true) { stats.AppearanceFound = true; }
 
             // Log updated stats
-            Debug.Log("Analyzer applied: Updated shared stats");
+            Debug.Log($"Updated AppearanceFound to true for mixtureKey: {mixtureKey}");
+            Debug.Log($" - ItemFound: {stats.ItemFound}");
+            Debug.Log($" - AppearanceFound: {stats.AppearanceFound}");
+            Debug.Log($" - UseFound: {stats.UseFound}");
+
+            if (stats.AppearanceFound == true)
+            {
+                feedbackText.text = "Appearance found!";
+                feedbackText.color = Color.green;
+            }
+            else
+            {
+                feedbackText.text = "Nothing found.";
+                feedbackText.color = Color.red;
+            }
+
+            StartCoroutine(FadeOutFeedback());
         }
+    }
+
+    private IEnumerator FadeOutFeedback()
+    {
+        // Show the feedback text
+        feedbackText.gameObject.SetActive(true);
+
+        // Wait for 3 seconds
+        yield return new WaitForSeconds(3f);
+
+        // Fade out the text
+        Color originalColor = feedbackText.color;
+        for (float t = 0; t < 1; t += Time.deltaTime)
+        {
+            feedbackText.color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Lerp(1, 0, t));
+            yield return null;
+        }
+
+        // Hide the feedback text after fading out
+        feedbackText.gameObject.SetActive(false);
     }
 }
