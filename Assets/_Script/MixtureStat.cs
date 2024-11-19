@@ -196,7 +196,14 @@ public class MixtureStat : MonoBehaviour
             Debug.Log($" - AppearanceFound: {stats.AppearanceFound}");
             Debug.Log($" - UseFound: {stats.UseFound}");
 
-            if (stats.AppearanceFound == true)
+            // If Appearance is found, automatically mark Item as found
+            if (stats.AppearanceFound)
+            {
+                stats.ItemFound = true; // Set ItemFound to true
+                Debug.Log($"ItemFound set to true for mixtureKey: {mixtureKey}");
+            }
+            // Provide feedback
+            if (stats.AppearanceFound)
             {
                 feedbackText.text = "Appearance found!";
                 feedbackText.color = Color.green;
