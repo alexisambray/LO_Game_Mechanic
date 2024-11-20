@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public EventSystem eventSystem; // Reference to the EventSystem
 
     // New Variables for Inventory Control
-    public GameObject inventoryCanvas; // Reference to the Inventory Canvas
+    //public GameObject inventoryCanvas; // Reference to the Inventory Canvas
 
     //day counter
     private int dayCount;
@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 
     //UI Effect
     public Material outlineMaterial;
+
+    public GameObject inventoryPanel;
 
     public static GameManager Instance
     {
@@ -62,29 +64,6 @@ public class GameManager : MonoBehaviour
 
         dayCount = 0;
         StartNewDay();
-
-
-        // Ensure the inventory canvas is inactive at the start
-        if (inventoryCanvas != null)
-        {
-            inventoryCanvas.SetActive(false); // Set it to inactive initially
-        }
-        else
-        {
-            Debug.LogError("Inventory canvas reference not set in the inspector.");
-        }
-
-        // Add listener for button click
-        if (nextDayButton != null)
-        {
-            nextDayButton.onClick.AddListener(OnNextDayButtonClicked);
-        }
-        else
-        {
-            Debug.LogWarning("Next Day Button is not assigned in the Inspector.");
-        }
-
-        SceneManager.LoadScene("LO_GameplayScene", LoadSceneMode.Additive);
     }
 
     private void Update()
@@ -200,21 +179,21 @@ public class GameManager : MonoBehaviour
                         }
                         break; // Stop checking after finding the first tool
                     }
-                    else if (hitObject.CompareTag("Inventory"))
-                    {
-                        InventoryManager.Instance.ToggleInventoryVisibility();
+                    //else if (hitObject.CompareTag("Inventory"))
+                    //{
+                    //    InventoryManager.Instance.ToggleInventoryVisibility();
 
-                        Scene currentScene = SceneManager.GetActiveScene();
-                        if (currentScene.name == "LO_GameMechanic")
-                        {
-                            SwitchScene("LO_GameplayScene");
-                        }
-                        else if (currentScene.name == "LO_GameplayScene")
-                        {
-                            SwitchScene("LO_GameMechanic");
-                        }
-                        break; // Exit the loop after handling the inventory
-                    }
+                    //    Scene currentScene = SceneManager.GetActiveScene();
+                    //    if (currentScene.name == "LO_GameMechanic")
+                    //    {
+                    //        SwitchScene("LO_GameplayScene");
+                    //    }
+                    //    else if (currentScene.name == "LO_GameplayScene")
+                    //    {
+                    //        SwitchScene("LO_GameMechanic");
+                    //    }
+                    //    break; // Exit the loop after handling the inventory
+                    //}
                 }
             }
             else
@@ -263,11 +242,31 @@ public class GameManager : MonoBehaviour
         return dayCount;
     }
 
-    public void SwitchScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+    //public void SwitchScene(string sceneName)
+    //{
+    //    SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
 
-        //Scene currentScene = SceneManager.GetActiveScene();
-        //SceneManager.UnloadSceneAsync(currentScene);
+    //    //Scene currentScene = SceneManager.GetActiveScene();
+    //    //SceneManager.UnloadSceneAsync(currentScene);
+    //}
+
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    Debug.Log("Object clicked!");
+    //}
+
+    public void ToggleInventory()
+    {
+        bool isActive = !inventoryPanel.activeSelf;
+        inventoryPanel.SetActive(isActive);
+
+        //inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+
+        foreach (Transform child in inventoryPanel.transform)
+        {
+            child.gameObject.SetActive(isActive);
+        }
     }
+
+
 }
