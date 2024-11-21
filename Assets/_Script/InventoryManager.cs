@@ -77,48 +77,21 @@ public class InventoryManager : MonoBehaviour
     {
         Debug.Log($"Clicked object: {clickedObject.name}");
 
-        // Ensure clickedObject has a MixturePrefab component
         MixturePrefab mixturePrefab = clickedObject.GetComponent<MixturePrefab>();
-
-        // If the clicked object is an ItemSlot, access its MixturePrefab
-        if (mixturePrefab == null)
-        {
-            // Try getting MixturePrefab from the child GameObject if necessary
-            mixturePrefab = clickedObject.GetComponentInChildren<MixturePrefab>();
-        }
-
         if (mixturePrefab != null)
         {
-            Debug.Log($"MixturePrefab found: {mixturePrefab.itemName}, IsUnlocked: {mixturePrefab.isUnlocked}");
-
-            if (mixturePrefab.isUnlocked) // Check if unlocked
+            if (mixturePrefab.isUnlocked)
             {
                 selectedItemImage.SetActive(true);
-                selectedItemImage.GetComponent<Image>().sprite = mixturePrefab.itemSprite; // Update item sprite
+                selectedItemImage.GetComponent<Image>().sprite = mixturePrefab.itemSprite; // Ensure sprite is assigned
 
-                // Check for null references here
                 if (selectedItemNameText != null)
-                    selectedItemNameText.text = mixturePrefab.itemName; // Update item name text
-                else
-                    Debug.LogError("selectedItemNameText is null");
+                    selectedItemNameText.text = mixturePrefab.itemName;
 
                 if (selectedItemDescriptionText != null)
-                    selectedItemDescriptionText.text = mixturePrefab.description; // Update item description
-                else
-                    Debug.LogError("selectedItemDescriptionText is null");
-
-                Debug.Log($"Selected item: {mixturePrefab.itemName}");
-            }
-            else
-            {
-                Debug.LogError("Item is not unlocked.");
+                    selectedItemDescriptionText.text = mixturePrefab.description;
             }
         }
-        else
-        {
-            Debug.LogError("MixturePrefab is missing.");
-        }
-        Debug.Log($"Item Sprite: {mixturePrefab?.itemSprite}, Item Name: {mixturePrefab?.itemName}, Description: {mixturePrefab?.description}");
     }
 
     public void PopulateInventory()

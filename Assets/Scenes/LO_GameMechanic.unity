@@ -4322,10 +4322,10 @@ RectTransform:
   - {fileID: 1374875936}
   m_Father: {fileID: 408510603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -173.2, y: 0}
+  m_SizeDelta: {x: 800, y: 364}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &784621839
 MonoBehaviour:
@@ -4583,10 +4583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3957359903d14a4183530984aba5996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemSprite: {fileID: 0}
-  description: 
-  hiddenDescription: 
+  itemName: Vinegar
+  itemSprite: {fileID: 21300000, guid: f7aae7946d3ac8b4abaafbefaf17009c, type: 3}
+  description: Vinegar is a homogeneous mixture used for food/beverage.
+  hiddenDescription: Vinegar is a homogeneous mixture used for food/beverage.
 --- !u!1 &831728747
 GameObject:
   m_ObjectHideFlags: 0
@@ -9439,7 +9439,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 'Day:'
 --- !u!222 &1487780310
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9475,6 +9475,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 692730971}
     m_Modifications:
+    - target: {fileID: -2203221824632084339, guid: 3511f3bb81707c249847f19c98d4e8c5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7aae7946d3ac8b4abaafbefaf17009c, type: 3}
     - target: {fileID: 537178831357284950, guid: 3511f3bb81707c249847f19c98d4e8c5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

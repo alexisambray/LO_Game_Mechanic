@@ -260,8 +260,6 @@ public class GameManager : MonoBehaviour
         bool isActive = !inventoryPanel.activeSelf;
         inventoryPanel.SetActive(isActive);
 
-        //inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-
         foreach (Transform child in inventoryPanel.transform)
         {
             child.gameObject.SetActive(isActive);

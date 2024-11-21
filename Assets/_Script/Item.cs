@@ -35,15 +35,15 @@ public class Item : MonoBehaviour
 
     public void UnlockItem()
     {
-        isUnlocked = true; // Set unlock status
+        isUnlocked = true;
         if (itemImage != null)
         {
-            itemImage.sprite = itemSprite;
+            Debug.Log($"Unlocking item: {itemName}, Sprite: {itemSprite}");
+            itemImage.sprite = itemSprite; // Update the sprite
             Color color = itemImage.color;
-            color.a = 1f; // Make visible
+            color.a = 1f; // Make the image visible
             itemImage.color = color;
         }
-        Debug.Log($"{itemName} has been unlocked!");
     }
 
     public bool IsVisible()

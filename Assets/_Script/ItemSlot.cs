@@ -19,12 +19,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Item Slot clicked: " + gameObject.name);
         if (mixturePrefab != null)
         {
             Item item = mixturePrefab.GetComponent<Item>();
 
-            if (item != null && item.IsVisible())// Check if the item is visible
+            if (item != null && item.IsVisible())
             {
                 if (!mixturePrefab.isUnlocked)
                 {
@@ -36,10 +35,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
                     Debug.Log("Item already unlocked.");
                 }
             }
-            else
-            {
-                Debug.LogError("Item is not visible or MixturePrefab reference is missing.");
-            }
         }
     }
 }
+
